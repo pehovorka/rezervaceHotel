@@ -44,3 +44,9 @@ Miloš,Zeman,77
 ![alt text](https://raw.githubusercontent.com/pehovorka/rezervaceHotel/master/rezervaceHotel/navrh/img/spravaRezervaci.PNG "Správa hotelu – filtrování rezervací")
 ![alt text](https://raw.githubusercontent.com/pehovorka/rezervaceHotel/master/rezervaceHotel/navrh/img/upravitPokoj.PNG "Upravení existujícího pokoje")
 ![alt text](https://raw.githubusercontent.com/pehovorka/rezervaceHotel/master/rezervaceHotel/navrh/img/upravitRezervaci.PNG "Upravení existující rezervace")
+
+## Konvence týmu
+* 1x týdně sraz týmu
+* Pravidelná komunikace nových řešení – domluva změn – změny vyžadují souhlas celého týmu
+* Dodržování Java konvencí
+* Dodatečné soubory mimo javu ve složce resources
