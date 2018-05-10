@@ -1,8 +1,5 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
-
-import java.io.Console;
-
 import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
 
 import javafx.application.Platform;
