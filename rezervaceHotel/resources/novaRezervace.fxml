@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.pehovorka.rezervaceHotel.ui.ControllerNovaRezervace">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -24,20 +24,26 @@
       <VBox minWidth="350.0" prefHeight="350.0" prefWidth="10.0" GridPane.rowIndex="1">
          <children>
             <Label text="Požadovaný počet lůžek" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <ComboBox fx:id="pocetLuzek" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
             <Label text="Požadovaná kategorie" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
-            <Label text="Od kdy" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <ComboBox fx:id="pozadovanaKategorie" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <HBox prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="Rok" />
-                  <ComboBox prefWidth="150.0" promptText="Měsíc" />
-                  <ComboBox prefWidth="150.0" promptText="Den" />
+                  <VBox prefHeight="200.0" prefWidth="500.0">
+                     <children>
+                        <Label text="Datum příjezdu" />
+                        <DatePicker fx:id="datumPrijezd" onAction="#datumPrijezdClick" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="500.0">
+                     <children>
+                        <Label text="Datum odjezdu" />
+                        <DatePicker fx:id="datumOdjezd" onAction="#datumOdjezdClick" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <Label text="Počet dní" />
-            <TextField />
-            <Button mnemonicParsing="false" text="Vyhledat volné pokoje">
+            <Button fx:id="buttonVyhledatPokoje" mnemonicParsing="false" onAction="#buttonVyhledatPokojeClick" text="Vyhledat volné pokoje">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -57,12 +63,12 @@
             <ListView prefHeight="200.0" prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Zrušit">
+                  <Button fx:id="buttonZrusit" mnemonicParsing="false" onAction="#buttonZrusitClick" text="Zrušit">
                      <HBox.margin>
                         <Insets left="250.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Pokračovat k zadání kontaktních údajů">
+                  <Button fx:id="buttonPokracovat" mnemonicParsing="false" onAction="#buttonPokracovatClick" text="Pokračovat k zadání kontaktních údajů">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>

@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -41,9 +41,7 @@
             <Label text="Datum" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="Rok" />
-                  <ComboBox prefWidth="150.0" promptText="Měsíc" />
-                  <ComboBox prefWidth="150.0" promptText="Den" />
+                  <DatePicker />
                </children>
             </HBox>
             <Button mnemonicParsing="false" text="Filtrovat">

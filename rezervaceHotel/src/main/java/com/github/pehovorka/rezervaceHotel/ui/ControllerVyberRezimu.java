@@ -27,6 +27,8 @@ public class ControllerVyberRezimu extends GridPane {
 	
 	@FXML
 	public void buttonZakaznikClick() throws Exception{
+	    Stage stage = (Stage) buttonZakaznik.getScene().getWindow();
+	    stage.close();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/novaRezervace.fxml"));
 		Parent root = loader.load();
@@ -39,6 +41,8 @@ public class ControllerVyberRezimu extends GridPane {
 	
 	@FXML
 	public void buttonSpravceClick() throws Exception {
+	    Stage stage = (Stage) buttonSpravce.getScene().getWindow();
+	    stage.close();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/spravceMain.fxml"));
 		Parent root = loader.load();
