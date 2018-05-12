@@ -22,7 +22,7 @@ public final class Start extends Application {
 
 		ControllerVyberRezimu controller = loader.getController();
 		Rezervace rezervace = new Rezervace();
-		//controller.inicializuj(rezervace);
+		controller.inicializuj(rezervace);
 
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();

@@ -1,5 +1,7 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,17 +26,25 @@ public class ControllerNovaRezervace {
 	private ComboBox<Integer> pocetLuzek;
 	@FXML
 	private ComboBox<String> pozadovanaKategorie;
+	
+	Rezervace rezervace;
+	
+	public void inicializuj(Rezervace rezervace) {
+		this.rezervace = rezervace;
+		
+	}
 
 @FXML
 public void buttonPokracovatClick() throws Exception{
 	FXMLLoader loader = new FXMLLoader();
-	loader.setLocation(getClass().getResource("/kontakt.fxml"));
+	loader.setLocation(getClass().getResource("/novyKlient.fxml"));
 	Parent root = loader.load();
-	ControllerKontakt controller = loader.getController();
-	Stage kontakt = new Stage();
-	kontakt.setScene(new Scene(root));
-	kontakt.show();
-	kontakt.setTitle("Zadání kontaktních údajů");		
+	ControllerNovyKlient controller = loader.getController();
+	controller.inicializuj(rezervace);
+	Stage novyKlient = new Stage();
+	novyKlient.setScene(new Scene(root));
+	novyKlient.show();
+	novyKlient.setTitle("Zadání kontaktních údajů");		
 }
 
 @FXML

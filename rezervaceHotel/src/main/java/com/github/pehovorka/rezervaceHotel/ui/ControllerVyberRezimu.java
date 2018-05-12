@@ -2,7 +2,8 @@ package com.github.pehovorka.rezervaceHotel.ui;
 
 import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
 
-import javafx.application.Platform;
+
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +23,6 @@ public class ControllerVyberRezimu extends GridPane {
 
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
-		
 	}
 	
 	@FXML
@@ -33,6 +33,7 @@ public class ControllerVyberRezimu extends GridPane {
 		loader.setLocation(getClass().getResource("/novaRezervace.fxml"));
 		Parent root = loader.load();
 		ControllerNovaRezervace controller = loader.getController();
+		controller.inicializuj(rezervace);
 		Stage novaRezervace = new Stage();
 		novaRezervace.setScene(new Scene(root));
 		novaRezervace.show();
@@ -47,9 +48,11 @@ public class ControllerVyberRezimu extends GridPane {
 		loader.setLocation(getClass().getResource("/spravceMain.fxml"));
 		Parent root = loader.load();
 		ControllerSpravceMain controller = loader.getController();
+		//controller.inicializuj(rezervace);
 		Stage spravceMain = new Stage();
 		spravceMain.setScene(new Scene(root));
 		spravceMain.show();
 		spravceMain.setTitle("Správa hotelu - režim správce");		
 	}
+
 }
