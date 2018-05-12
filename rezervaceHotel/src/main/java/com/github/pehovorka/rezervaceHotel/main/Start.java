@@ -1,6 +1,6 @@
 package com.github.pehovorka.rezervaceHotel.main;
 
-import com.github.pehovorka.rezervaceHotel.ui.HomeController;
+import com.github.pehovorka.rezervaceHotel.ui.ControllerVyberRezimu;
 import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
 
 import javafx.application.Application;
@@ -17,16 +17,16 @@ public final class Start extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/MainWindow.fxml"));
+		loader.setLocation(getClass().getResource("/vyberRezimu.fxml"));
 		Parent root = loader.load();
 
-		HomeController controller = loader.getController();
+		ControllerVyberRezimu controller = loader.getController();
 		Rezervace rezervace = new Rezervace();
 		//controller.inicializuj(rezervace);
 
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
-		primaryStage.setTitle("Správa rezervací");
+		primaryStage.setTitle("Výběr režimu");
 	}
 
 }
