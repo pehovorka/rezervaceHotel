@@ -26,7 +26,7 @@ public class Pokoj {
 	 *            Počet lůžek v pokoji.
 	 * @param cena
 	 *            Bežná cena mimo sezónu.
-	 * @param y
+	 * @param cenaSezona
 	 *            Cena během sezóny.
 	 */
 	public Pokoj(String nazev, String trida, int pocetLuzek, int cena, int cenaSezona) {
