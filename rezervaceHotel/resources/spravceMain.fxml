@@ -25,6 +25,11 @@
                   <MenuItem fx:id="menuItemNovyPokoj" mnemonicParsing="false" onAction="#menuItemNovyPokojClick" text="Nový pokoj" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Uložit">
+              <items>
+                <MenuItem fx:id="menuItemUlozit" mnemonicParsing="false" onAction="#menuItemUlozitClick" text="Uložit do souboru" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <Label text="Správa hotelu" GridPane.rowIndex="1">

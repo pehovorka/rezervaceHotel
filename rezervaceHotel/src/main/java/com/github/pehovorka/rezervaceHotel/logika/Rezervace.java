@@ -1,10 +1,13 @@
 package com.github.pehovorka.rezervaceHotel.logika;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -25,8 +28,10 @@ public class Rezervace extends Observable {
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
 	private boolean rezimSpravce = false;
-	private String[] tridyPokoju = { "economy", "premium", "exclusive"};
+	private String[] tridyPokoju = { "economy", "premium", "exclusive" };
 	private Integer[] poctyLuzek = new Integer[10];
+	File klientiSoubor = new File(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
+	File pokojeSoubor = new File(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
@@ -38,9 +43,7 @@ public class Rezervace extends Observable {
 		for (int i = 0; i < 10; i++) {
 			poctyLuzek[i] = i + 1;
 		}
-		File klientiSoubor = new File(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
 		nactiSoubor(klientiSoubor, "klienti");
-		File pokojeSoubor = new File(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
 		nactiSoubor(pokojeSoubor, "pokoje");
 
 	}
@@ -137,12 +140,11 @@ public class Rezervace extends Observable {
 					String[] cast = radek.split(",");
 					if (cast.length != 3) {
 						throw new Exception();
-					}
-					else {
-					System.out.println(radek);
-					Klient k = new Klient(cast[0], cast[1], Integer.parseInt(cast[2]));
-					seznamKlientu.put(k.getCisloOP(), k);
-					radek = ctecka.readLine();
+					} else {
+						System.out.println(radek);
+						Klient k = new Klient(cast[0], cast[1], Integer.parseInt(cast[2]));
+						seznamKlientu.put(k.getCisloOP(), k);
+						radek = ctecka.readLine();
 					}
 				}
 			}
@@ -152,12 +154,12 @@ public class Rezervace extends Observable {
 					String[] cast = radek.split(",");
 					if (cast.length != 5) {
 						throw new Exception();
-					}
-					else {
-					System.out.println(radek);
-					Pokoj p = new Pokoj(cast[0], cast[1], Integer.parseInt(cast[2]), Integer.parseInt(cast[3]), Integer.parseInt(cast[4]));
-					seznamPokoju.put(p.getNazev(), p);
-					radek = ctecka.readLine();
+					} else {
+						System.out.println(radek);
+						Pokoj p = new Pokoj(cast[0], cast[1], Integer.parseInt(cast[2]), Integer.parseInt(cast[3]),
+								Integer.parseInt(cast[4]));
+						seznamPokoju.put(p.getNazev(), p);
+						radek = ctecka.readLine();
 					}
 				}
 			}
@@ -168,6 +170,39 @@ public class Rezervace extends Observable {
 			System.out.println("Chyba vstupu");
 		} catch (Exception e) {
 			System.out.println("Chyba při načítání řádku, neplatný počet parametrů");
+		}
+	}
+
+	public void ulozSoubor(String typ) {
+		if (typ.equals("klienti")) {
+			File soubor = klientiSoubor;
+			try (BufferedWriter zapisovac = new BufferedWriter(new FileWriter(soubor))) {
+				for (Integer klientKlic : getKlienti().keySet()) {
+					String radek = getKlienti().get(klientKlic).getJmeno() + ","
+							+ getKlienti().get(klientKlic).getPrijmeni() + ","
+							+ getKlienti().get(klientKlic).getCisloOP();
+					zapisovac.write(radek);
+					zapisovac.newLine();
+				}
+				zapisovac.close();
+			} catch (Exception e) {
+			}
+			System.out.println("Ukládám klienty...");
+		}
+		if (typ.equals("pokoje")) {
+			File soubor = pokojeSoubor;
+			try (BufferedWriter zapisovac = new BufferedWriter(new FileWriter(soubor))) {
+				for (String pokojeKlic : getPokoje().keySet()) {
+					String radek = getPokoje().get(pokojeKlic).getNazev() + "," + getPokoje().get(pokojeKlic).getTrida()
+							+ "," + getPokoje().get(pokojeKlic).getPocetLuzek() + ","
+							+ getPokoje().get(pokojeKlic).getCena() + "," + getPokoje().get(pokojeKlic).getCenaSezona();
+					zapisovac.write(radek);
+					zapisovac.newLine();
+				}
+				zapisovac.close();
+			} catch (Exception e) {
+			}
+			System.out.println("Ukládám pokoje...");
 		}
 	}
 

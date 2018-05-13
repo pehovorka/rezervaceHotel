@@ -36,6 +36,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private MenuItem menuItemNovyPokoj;
 	@FXML
+	private MenuItem menuItemUlozit;
+	@FXML
 	private ComboBox<String> pokoj;
 	@FXML
 	private ComboBox<String> klient;
@@ -99,6 +101,12 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		novyPokoj.setScene(new Scene(root));
 		novyPokoj.show();
 		novyPokoj.setTitle("Nový pokoj");
+	}
+	
+	@FXML
+	public void menuItemUlozitClick() throws Exception{
+		rezervace.ulozSoubor("klienti");
+		rezervace.ulozSoubor("pokoje");
 	}
 	
 	@FXML
