@@ -42,11 +42,6 @@ public class Rezervace extends Observable {
 	String pokojeResources = getClass().getResource("/dataRezervaci/pokoje.csv").getFile();
 	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
 	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
-//	String klientiSoubor = new String(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
-//	String pokojeSoubor = new String(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
-//	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
-//	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
-
 
 
 	/**
@@ -149,8 +144,9 @@ public class Rezervace extends Observable {
 	 * 
 	 * @param soubor1 Adresa zdrojového souboru
 	 * @param soubor2 Adresa cílového souboru
+	 * @param stream InputStream zdrojového souboru
 	 */
-    private void zkopirujSoubor(String soubor1, String soubor2) {
+    private void zkopirujSoubor(String soubor1, String soubor2, InputStream stream) {
 
 		/* Zdrojový soubor, který bude zkopírován */
 		File zdrojovySoubor = new File(soubor1);
@@ -167,13 +163,10 @@ public class Rezervace extends Observable {
 			}
 		}
 
-		InputStream vstup = null;
+		InputStream vstup = stream;
 		OutputStream vystup = null;
 
 		try {
-
-			/* FileInputStream pro čtení streamů */
-			vstup = new FileInputStream(zdrojovySoubor);
 
 			/* FileOutputStream pro zápis streamů */
 			vystup = new FileOutputStream(cilovySoubor);
@@ -228,8 +221,8 @@ public class Rezervace extends Observable {
 		        System.out.println("Složka vytvořena");  
 		    }
 		    try {
-				zkopirujSoubor(klientiResources, klientiSoubor);
-				zkopirujSoubor(pokojeResources, pokojeSoubor);
+				zkopirujSoubor(klientiResources, klientiSoubor, klientiStream);
+				zkopirujSoubor(pokojeResources, pokojeSoubor, pokojeStream);
 		    }
 		    catch(Exception e){
 		    	System.out.println("Nelze vytvořit soubory");		    	
