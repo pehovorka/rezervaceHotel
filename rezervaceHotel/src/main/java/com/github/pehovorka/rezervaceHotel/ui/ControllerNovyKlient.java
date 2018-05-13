@@ -56,13 +56,6 @@ public class ControllerNovyKlient extends GridPane{
 		}
 		else {
 		try {
-//		if (rezervace.getKlienti().containsKey(Integer.parseInt(cisloOP.getText())) && rezervace.getKlienti().) {
-//			Alert alert = new Alert(AlertType.ERROR);
-//			alert.setTitle("Tento OP je již v databázi");
-//			alert.setHeaderText("Toto číslo občanského průkazu již zadal někdo kdo se jmenuje jinak než vy!");
-//			alert.showAndWait();
-//		}
-//		else {
 		Klient vkladany = new Klient(jmeno.getText(),prijmeni.getText(),Integer.parseInt(cisloOP.getText()));
 		if (rezervace.getKlienti().containsKey(vkladany.getCisloOP()) && (!rezervace.getKlienti().get(vkladany.getCisloOP()).getJmeno().equals(vkladany.getJmeno()) || !rezervace.getKlienti().get(vkladany.getCisloOP()).getPrijmeni().equals(vkladany.getPrijmeni()))) {	
 				Alert alert = new Alert(AlertType.ERROR);
