@@ -1,5 +1,8 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,7 +46,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private ListView<String> seznamRezervaci;
 	
-	Rezervace rezervace;
+	private Rezervace rezervace;
+	private List<String> seznamKlientu = new ArrayList<>();
+	private List<String> seznamPokoju = new ArrayList<>();
+	
 
 	
 	
@@ -57,12 +63,16 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
 		for (String pokojKlic : rezervace.getPokoje().keySet()) {
-			pokoj.getItems().addAll(rezervace.getPokoje().get(pokojKlic).toString());
+			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
 	    }
 	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
-	        klient.getItems().addAll(rezervace.getKlienti().get(klientKlic).toString());
+	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
 	    }
-		rezervace.addObserver(this);
+		Collections.sort(seznamPokoju);
+		Collections.sort(seznamKlientu);
+	    pokoj.getItems().addAll(seznamPokoju);
+	    klient.getItems().addAll(seznamKlientu);
+	    rezervace.addObserver(this);
 	}
 	
 	@FXML
@@ -99,13 +109,18 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	public void update(Observable arg0, Object arg1) {
 	    pokoj.getItems().clear();
 	    klient.getItems().clear();
+	    seznamPokoju.removeAll(seznamPokoju);
+	    seznamKlientu.removeAll(seznamKlientu);
 		for (String pokojKlic : rezervace.getPokoje().keySet()) {
-			pokoj.getItems().addAll(rezervace.getPokoje().get(pokojKlic).toString());
+			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
 	    }
 	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
-	        klient.getItems().addAll(rezervace.getKlienti().get(klientKlic).toString());
+	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
 	    }
-		
+		seznamPokoju.sort(String.CASE_INSENSITIVE_ORDER);
+		seznamKlientu.sort(String.CASE_INSENSITIVE_ORDER);
+	    pokoj.getItems().addAll(seznamPokoju);
+	    klient.getItems().addAll(seznamKlientu);
 	}
 	
 	

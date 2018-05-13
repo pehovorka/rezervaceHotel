@@ -10,11 +10,11 @@ package com.github.pehovorka.rezervaceHotel.logika;
  *@version    Alpha 1
  */
 public class Pokoj {
-	private String trida;
 	private String nazev;
-	private int pocetLuzek;
-	private int cena;
-	private int cenaSezona;
+	private String trida;
+	private Integer pocetLuzek;
+	private Integer cena;
+	private Integer cenaSezona;
 
 
 	/**

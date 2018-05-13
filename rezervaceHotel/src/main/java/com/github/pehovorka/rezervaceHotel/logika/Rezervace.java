@@ -25,8 +25,7 @@ public class Rezervace extends Observable {
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
 	private boolean rezimSpravce = false;
-	private String[] tridyPokoju = { "Jednolůžko", "Jednolůžko premium", "Dvoulůžko - double", "Dvoulůžko - twin",
-			"Apartmán" };
+	private String[] tridyPokoju = { "economy", "premium", "exclusive"};
 	private Integer[] poctyLuzek = new Integer[10];
 
 	/**
@@ -41,6 +40,8 @@ public class Rezervace extends Observable {
 		}
 		File klientiSoubor = new File(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
 		nactiSoubor(klientiSoubor, "klienti");
+		File pokojeSoubor = new File(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
+		nactiSoubor(pokojeSoubor, "pokoje");
 
 	}
 
@@ -141,6 +142,21 @@ public class Rezervace extends Observable {
 					System.out.println(radek);
 					Klient k = new Klient(cast[0], cast[1], Integer.parseInt(cast[2]));
 					seznamKlientu.put(k.getCisloOP(), k);
+					radek = ctecka.readLine();
+					}
+				}
+			}
+			if (typ.equals("pokoje")) {
+				System.out.println("pokoje.csv");
+				while (radek != null) {
+					String[] cast = radek.split(",");
+					if (cast.length != 5) {
+						throw new Exception();
+					}
+					else {
+					System.out.println(radek);
+					Pokoj p = new Pokoj(cast[0], cast[1], Integer.parseInt(cast[2]), Integer.parseInt(cast[3]), Integer.parseInt(cast[4]));
+					seznamPokoju.put(p.getNazev(), p);
 					radek = ctecka.readLine();
 					}
 				}
