@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 /**
  *  Třída ControllerSpravceMain
  * 
- *  Kontroler, který zprostředkovává komunikaci mezi grafikou hlavního okna správce a logikou adventury.
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou hlavního okna správce a logikou rezervačního systému.
  *
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
@@ -68,7 +68,16 @@ public class ControllerSpravceMain extends GridPane {
 	}
 	
 	@FXML
-	public void menuItemNovyPokojClick() throws Exception{	
+	public void menuItemNovyPokojClick() throws Exception{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/novyPokoj.fxml"));
+		Parent root = loader.load();
+		ControllerNovyPokoj controller = loader.getController();
+		controller.inicializuj(rezervace);
+		Stage novyPokoj = new Stage();
+		novyPokoj.setScene(new Scene(root));
+		novyPokoj.show();
+		novyPokoj.setTitle("Nový pokoj");
 	}
 	
 	@FXML

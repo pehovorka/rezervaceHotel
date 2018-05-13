@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 /**
  *  Třída ControllerNovyKlient
  * 
- *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro založení nového klienta a logikou adventury.
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro založení nového klienta a logikou rezervačního systému.
  *
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1

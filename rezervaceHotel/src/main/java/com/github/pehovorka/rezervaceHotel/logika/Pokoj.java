@@ -1,5 +1,6 @@
 package com.github.pehovorka.rezervaceHotel.logika;
 
+
 /**
  *  Třída Pokoj
  * 
@@ -14,6 +15,7 @@ public class Pokoj {
 	private int pocetLuzek;
 	private int cena;
 	private int cenaSezona;
+
 
 	/**
 	 * Vytváří pokoj.

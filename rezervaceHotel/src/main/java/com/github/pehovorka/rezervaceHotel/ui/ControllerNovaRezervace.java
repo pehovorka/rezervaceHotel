@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 /**
  *  Třída ControllerNovaRezervace
  * 
- *  Kontroler, který zprostředkovává komunikaci mezi grafikou rezervačního okna a logikou adventury.
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou rezervačního okna a logikou rezervačního systému.
  *
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1

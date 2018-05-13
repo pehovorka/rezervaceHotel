@@ -17,7 +17,7 @@ import javafx.stage.WindowEvent;;
 /**
  *  Třída ControllerVyberRezimu
  * 
- *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro výběr režimu a logikou adventury.
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro výběr režimu a logikou rezervačního systému.
  *
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
