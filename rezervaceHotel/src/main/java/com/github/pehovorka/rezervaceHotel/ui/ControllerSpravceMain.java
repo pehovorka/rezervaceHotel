@@ -1,5 +1,8 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
 
 import javafx.fxml.FXML;
@@ -23,7 +26,7 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-public class ControllerSpravceMain extends GridPane {
+public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
 	private MenuItem menuItemNovaRezervace;
@@ -41,6 +44,7 @@ public class ControllerSpravceMain extends GridPane {
 	private ListView<String> seznamRezervaci;
 	
 	Rezervace rezervace;
+
 	
 	
 	/**
@@ -52,6 +56,13 @@ public class ControllerSpravceMain extends GridPane {
 	 */
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
+		for (String pokojKlic : rezervace.getPokoje().keySet()) {
+			pokoj.getItems().addAll(rezervace.getPokoje().get(pokojKlic).toString());
+	    }
+	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
+	        klient.getItems().addAll(rezervace.getKlienti().get(klientKlic).toString());
+	    }
+		rezervace.addObserver(this);
 	}
 	
 	@FXML
@@ -82,6 +93,19 @@ public class ControllerSpravceMain extends GridPane {
 	
 	@FXML
 	public void buttonFiltrovatClick() throws Exception{	
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+	    pokoj.getItems().clear();
+	    klient.getItems().clear();
+		for (String pokojKlic : rezervace.getPokoje().keySet()) {
+			pokoj.getItems().addAll(rezervace.getPokoje().get(pokojKlic).toString());
+	    }
+	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
+	        klient.getItems().addAll(rezervace.getKlienti().get(klientKlic).toString());
+	    }
+		
 	}
 	
 	

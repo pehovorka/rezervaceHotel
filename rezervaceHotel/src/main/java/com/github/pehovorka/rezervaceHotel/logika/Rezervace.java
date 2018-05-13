@@ -2,6 +2,8 @@ package com.github.pehovorka.rezervaceHotel.logika;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
 
 /**
@@ -12,7 +14,7 @@ import com.github.pehovorka.rezervaceHotel.logika.Klient;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-public class Rezervace {
+public class Rezervace extends Observable {
 	
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
@@ -42,6 +44,8 @@ public class Rezervace {
 	 */
 	public void vlozKlienta(Klient k) {
 		seznamKlientu.put(k.getCisloOP(), k);
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
     /**
@@ -61,6 +65,8 @@ public class Rezervace {
 	 */
 	public void vlozPokoj(Pokoj p) {
 		seznamPokoju.put(p.getNazev(), p);
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
     /**

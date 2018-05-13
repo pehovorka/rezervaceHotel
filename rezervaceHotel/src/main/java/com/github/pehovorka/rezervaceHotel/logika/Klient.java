@@ -87,5 +87,20 @@ public class Klient {
 	public void setCisloOP(Integer cisloOP) {
 		this.cisloOP = cisloOP;
 	}
+	
+    /**
+     * Metoda vrací celé jméno klienta včetně čísla OP
+     *
+     * @return celeJmeno
+     */
+    public String getCeleJmeno() {
+        String celeJmeno = getJmeno() + " " + getPrijmeni() + " (OP: " + getCisloOP()+")";
+    	return celeJmeno;       
+    }
+	
+	@Override
+	public String toString() {
+		return getCeleJmeno();
+	}
 
 }

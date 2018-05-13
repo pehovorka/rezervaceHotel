@@ -140,7 +140,7 @@ public class Pokoj {
      * @return nazevSParametry
      */
     public String getNazevSParametry() {
-        String nazevSParametry = "Název: "+ getNazev() + "; Třída: " + getTrida() + "; Počet lůžek: " + getPocetLuzek() + "; Cena: " + getCena() + "; Cena v sezóně: " + getCenaSezona();
+        String nazevSParametry = getNazev() + " - Třída: " + getTrida() + "; Počet lůžek: " + getPocetLuzek() + "; Cena: " + getCena() + "; Cena v sezóně: " + getCenaSezona();
     	return nazevSParametry;       
     }
 	
