@@ -15,32 +15,33 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
- *  Třída ControllerNovyPokoj
+ * Třída ControllerNovyPokoj
  * 
- *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro založení nového pokoje a logikou rezervačního systému.
+ * Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro založení
+ * nového pokoje a logikou rezervačního systému.
  *
- *@author     Petr Hovorka, Aleksandr Kadesnikov
- *@version    Alpha 1
+ * @author Petr Hovorka, Aleksandr Kadesnikov
+ * @version Alpha 1
  */
 public class ControllerNovyPokoj extends GridPane {
-	
+
 	@FXML
-	private ComboBox<Integer> comboBoxPocetLuzek; 
+	private ComboBox<Integer> comboBoxPocetLuzek;
 	@FXML
-	private ComboBox<String> comboBoxTrida; 
+	private ComboBox<String> comboBoxTrida;
 	@FXML
-	private TextField textFieldCena; 
+	private TextField textFieldCena;
 	@FXML
-	private TextField textFieldCenaSezona; 
+	private TextField textFieldCenaSezona;
 	@FXML
-	private TextField textFieldNazev; 
+	private TextField textFieldNazev;
 	@FXML
-	private Button buttonZrusit; 
+	private Button buttonZrusit;
 	@FXML
-	private Button buttonPotvrdit; 
-	
+	private Button buttonPotvrdit;
+
 	Rezervace rezervace;
-	
+
 	/**
 	 * Metoda provede inicializaci grafických prvků
 	 * 
@@ -52,51 +53,52 @@ public class ControllerNovyPokoj extends GridPane {
 		this.rezervace = rezervace;
 		comboBoxTrida.getItems().addAll(rezervace.getTridyPokoju());
 		comboBoxPocetLuzek.getItems().addAll(rezervace.getPoctyLuzek());
-		
+
 	}
-	
+
 	@FXML
-	public void buttonZrusitClick() throws Exception{
+	public void buttonZrusitClick() throws Exception {
 		Stage stage = (Stage) buttonZrusit.getScene().getWindow();
-	    stage.close();
+		stage.close();
 	}
-	
+
 	@FXML
-	public void buttonPotvrditClick() throws Exception{
-		if (textFieldCena.getText().equals("") || textFieldCenaSezona.getText().equals("") || textFieldNazev.getText().equals("") || comboBoxPocetLuzek.getSelectionModel().isEmpty() || comboBoxPocetLuzek.getSelectionModel().isEmpty()) {
+	public void buttonPotvrditClick() throws Exception {
+		if (textFieldCena.getText().equals("") || textFieldCenaSezona.getText().equals("")
+				|| textFieldNazev.getText().equals("") || comboBoxPocetLuzek.getSelectionModel().isEmpty()
+				|| comboBoxPocetLuzek.getSelectionModel().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Špatně zadané údaje");
 			alert.setHeaderText("Zadejte všechny údaje!");
 			alert.showAndWait();
-		}
-		else {
+		} else {
 			try {
-			Pokoj vkladany = new Pokoj(textFieldNazev.getText(),comboBoxTrida.getSelectionModel().getSelectedItem(),comboBoxPocetLuzek.getSelectionModel().getSelectedItem(),Integer.parseInt(textFieldCena.getText()),Integer.parseInt(textFieldCenaSezona.getText()));
-			if (rezervace.getPokoje().containsKey(vkladany.getNazev())) {	
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Pokoj s tímto názvem již existuje");
-			alert.setHeaderText("Zadejte jiný název pokoje, pokoj s tímto názvem již existuje!");
-			alert.showAndWait();
-			}
-			else {
-				rezervace.vlozPokoj(vkladany);
-				Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
-			    stage.close();
-			    for(Entry<String, Pokoj> entry : rezervace.getPokoje().entrySet())
-			    {  
-			    	System.out.println("Název: "+ entry.getKey() + "; Třída: " +entry.getValue().getTrida() + "; Počet lůžek: " + entry.getValue().getPocetLuzek() + "; Cena: " + entry.getValue().getCena() + "; Cena v sezóně: " + entry.getValue().getCenaSezona());
-			    }
-			}
-			} 
-			catch (NumberFormatException e) {
+				Pokoj vkladany = new Pokoj(textFieldNazev.getText(),
+						comboBoxTrida.getSelectionModel().getSelectedItem(),
+						comboBoxPocetLuzek.getSelectionModel().getSelectedItem(),
+						Integer.parseInt(textFieldCena.getText()), Integer.parseInt(textFieldCenaSezona.getText()));
+				if (rezervace.getPokoje().containsKey(vkladany.getNazev())) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Pokoj s tímto názvem již existuje");
+					alert.setHeaderText("Zadejte jiný název pokoje, pokoj s tímto názvem již existuje!");
+					alert.showAndWait();
+				} else {
+					rezervace.vlozPokoj(vkladany);
+					Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+					stage.close();
+					for (Entry<String, Pokoj> entry : rezervace.getPokoje().entrySet()) {
+						System.out.println("Název: " + entry.getKey() + "; Třída: " + entry.getValue().getTrida()
+								+ "; Počet lůžek: " + entry.getValue().getPocetLuzek() + "; Cena: "
+								+ entry.getValue().getCena() + "; Cena v sezóně: " + entry.getValue().getCenaSezona());
+					}
+				}
+			} catch (NumberFormatException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Špatný formát ceny");
 				alert.setHeaderText("Cena musí být pouze celé číslo!");
 				alert.showAndWait();
 			}
-			
+
 		}
 	}
 }
-
-

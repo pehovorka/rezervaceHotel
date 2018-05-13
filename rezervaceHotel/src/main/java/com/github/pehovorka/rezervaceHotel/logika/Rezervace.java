@@ -3,16 +3,22 @@ package com.github.pehovorka.rezervaceHotel.logika;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Třída Rezervace
@@ -28,10 +34,20 @@ public class Rezervace extends Observable {
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
 	private boolean rezimSpravce = false;
-	private String[] tridyPokoju = { "economy", "premium", "exclusive" };
+	private String[] tridyPokoju = { "economy", "premium", "exclusive"};
 	private Integer[] poctyLuzek = new Integer[10];
-	File klientiSoubor = new File(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
-	File pokojeSoubor = new File(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
+	String klientiSoubor = "./hotelData/klienti.csv";
+	String pokojeSoubor = "./hotelData/pokoje.csv";
+	String klientiResources = getClass().getResource("/dataRezervaci/klienti.csv").getFile();
+	String pokojeResources = getClass().getResource("/dataRezervaci/pokoje.csv").getFile();
+	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
+	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
+//	String klientiSoubor = new String(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
+//	String pokojeSoubor = new String(getClass().getResource("/dataRezervaci/pokoje.csv").getFile());
+//	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
+//	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
+
+
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
@@ -126,12 +142,100 @@ public class Rezervace extends Observable {
 	public Integer[] getPoctyLuzek() {
 		return poctyLuzek;
 	}
+	
+	
+	/**
+	 * Metoda pro zkopírování souborů.
+	 * 
+	 * @param soubor1 Adresa zdrojového souboru
+	 * @param soubor2 Adresa cílového souboru
+	 */
+    private void zkopirujSoubor(String soubor1, String soubor2) {
 
-	public void nacti(String nazevSouboru) {
+		/* Zdrojový soubor, který bude zkopírován */
+		File zdrojovySoubor = new File(soubor1);
 
+		/* Cílový soubor */
+		File cilovySoubor = new File(soubor2);
+		
+		/* Pokud soubor neexistuje, tak ho vytvoř */
+		if (!zdrojovySoubor.exists()) {
+			try {
+				cilovySoubor.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		InputStream vstup = null;
+		OutputStream vystup = null;
+
+		try {
+
+			/* FileInputStream pro čtení streamů */
+			vstup = new FileInputStream(zdrojovySoubor);
+
+			/* FileOutputStream pro zápis streamů */
+			vystup = new FileOutputStream(cilovySoubor);
+
+			byte[] buf = new byte[1024];
+			int bytesRead;
+
+			while ((bytesRead = vstup.read(buf)) > 0) {
+				vystup.write(buf, 0, bytesRead);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			try {
+
+				if (null != vstup) {
+					vstup.close();
+				}
+				
+				if (null != vystup) {
+					vystup.close();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public void nactiSoubor(File soubor, String typ) {
+ 
+
+
+	public void nactiSoubor(String soubor, String typ) {
+		File slozka = new File("hotelData");
+		if (!slozka.exists()) {
+		    System.out.println("Vytvářím složku: " + slozka.getName());
+		    boolean vysledek = false;
+
+		    try{
+		        slozka.mkdir();
+		        vysledek = true;
+		    } 
+		    catch(SecurityException se){
+		    	System.out.println("Nelze vytvořit složku, nemáte nedostatečné oprávnění.");
+		    }        
+		    if(vysledek) {    
+		        System.out.println("Složka vytvořena");  
+		    }
+		    try {
+				zkopirujSoubor(klientiResources, klientiSoubor);
+				zkopirujSoubor(pokojeResources, pokojeSoubor);
+		    }
+		    catch(Exception e){
+		    	System.out.println("Nelze vytvořit soubory");		    	
+		    }
+		    
+		}
 		try (BufferedReader ctecka = new BufferedReader(new FileReader(soubor))) {
 			String radek = ctecka.readLine();
 			if (typ.equals("klienti")) {
@@ -163,20 +267,25 @@ public class Rezervace extends Observable {
 					}
 				}
 			}
-
+			ctecka.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Soubor nenlezen");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Soubor nenalezen");
+			alert.setHeaderText(":(");
+			alert.showAndWait();
 		} catch (IOException e) {
 			System.out.println("Chyba vstupu");
 		} catch (Exception e) {
 			System.out.println("Chyba při načítání řádku, neplatný počet parametrů");
 		}
-	}
+		}
 
-	public void ulozSoubor(String typ) {
+
+	public void ulozSoubor(String typ) throws FileNotFoundException {
 		if (typ.equals("klienti")) {
-			File soubor = klientiSoubor;
-			try (BufferedWriter zapisovac = new BufferedWriter(new FileWriter(soubor))) {
+			FileOutputStream klientiOutStream = new FileOutputStream(klientiSoubor);
+			try (BufferedWriter zapisovac = new BufferedWriter(new OutputStreamWriter(klientiOutStream))) {
 				for (Integer klientKlic : getKlienti().keySet()) {
 					String radek = getKlienti().get(klientKlic).getJmeno() + ","
 							+ getKlienti().get(klientKlic).getPrijmeni() + ","
@@ -190,8 +299,8 @@ public class Rezervace extends Observable {
 			System.out.println("Ukládám klienty...");
 		}
 		if (typ.equals("pokoje")) {
-			File soubor = pokojeSoubor;
-			try (BufferedWriter zapisovac = new BufferedWriter(new FileWriter(soubor))) {
+			FileOutputStream pokojeOutStream = new FileOutputStream(pokojeSoubor);
+			try (BufferedWriter zapisovac = new BufferedWriter(new OutputStreamWriter(pokojeOutStream))) {
 				for (String pokojeKlic : getPokoje().keySet()) {
 					String radek = getPokoje().get(pokojeKlic).getNazev() + "," + getPokoje().get(pokojeKlic).getTrida()
 							+ "," + getPokoje().get(pokojeKlic).getPocetLuzek() + ","
