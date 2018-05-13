@@ -78,13 +78,16 @@ public void datumOdjezdClick() throws Exception{
 public void buttonZrusitClick() throws Exception{	
 	Stage stage = (Stage) buttonZrusit.getScene().getWindow();
     stage.close();
-	FXMLLoader loader = new FXMLLoader();
+	if (!rezervace.isRezimSpravce()) {
+    FXMLLoader loader = new FXMLLoader();
 	loader.setLocation(getClass().getResource("/vyberRezimu.fxml"));
 	Parent root = loader.load();
 	ControllerVyberRezimu controller = loader.getController();
+	controller.inicializuj(rezervace);
 	Stage vyberRezimu = new Stage();
 	vyberRezimu.setScene(new Scene(root));
 	vyberRezimu.show();
-	vyberRezimu.setTitle("Výběr režimu");	
+	vyberRezimu.setTitle("Výběr režimu");
+	}
 }
 }

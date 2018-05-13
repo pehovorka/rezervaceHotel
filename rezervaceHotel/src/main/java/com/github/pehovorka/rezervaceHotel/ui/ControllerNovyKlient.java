@@ -64,7 +64,7 @@ public class ControllerNovyKlient extends GridPane{
 				alert.showAndWait();
 		}
 		else {
-		System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" 'Číslo OP: "+vkladany.getCisloOP());
+		System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
 		rezervace.vlozKlienta(vkladany);
 		Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
 	    stage.close();

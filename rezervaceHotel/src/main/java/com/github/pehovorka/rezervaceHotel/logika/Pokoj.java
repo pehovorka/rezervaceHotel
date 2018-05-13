@@ -36,5 +36,100 @@ public class Pokoj {
 		this.cena = cena;
 		this.cenaSezona = cenaSezona;
 	}
+	
+    /**
+     *  Metoda vrátí název pokoje.
+     *  
+     *  @return nazev Název pokoje.
+     */
+    public String getNazev(){
+        return nazev;
+    }
+    
+	/**
+	 * Metoda nastaví název pokoje.
+	 * 
+	 * @param nazev
+	 *            Název pokoje. 
+	 */
+	public void setNazev(String nazev) {
+		this.nazev = nazev;
+	}
+    
+    /**
+     *  Metoda vrátí třídu pokoje.
+     *  
+     *  @return trida Třída pokoje.
+     */
+    public String getTrida(){
+        return trida;
+    }
+    
+	/**
+	 * Metoda nastaví třídu pokoje.
+	 * 
+	 * @param trida
+	 *            Třída pokoje. 
+	 */
+	public void setTrida(String trida) {
+		this.trida = trida;
+	}
+    
+    /**
+     *  Metoda vrátí počet lůžek v pokoji.
+     *  
+     *  @return pocetLuzek Počet lůžek v pokoji.
+     */
+    public int getPocetLuzek(){
+        return pocetLuzek;
+    }
+    
+	/**
+	 * Metoda nastaví počet lůžek v pokoji.
+	 * 
+	 * @param pocetLuzek
+	 *            Počet lůžek v pokoji. 
+	 */
+	public void setPocetLuzek(int pocetLuzek) {
+		this.pocetLuzek = pocetLuzek;
+	}
+    
+    /**
+     *  Metoda vrátí mimosezónní cenu za pokoj.
+     *  
+     *  @return cena Mimosezónní cena za pokoj.
+     */
+    public int getCena(){
+        return cena;
+    }
+    
+	/**
+	 * Metoda nastaví mimosezónní cenu za pokoj.
+	 * 
+	 * @param cena
+	 *            Mimosezónní cena za pokoj. 
+	 */
+	public void setCena(int cena) {
+		this.cena = cena;
+	}
+    
+    /**
+     *  Metoda vrátí sezónní cenu za pokoj.
+     *  
+     *  @return cenaSezona Sezónní cena za pokoj.
+     */
+    public int getCenaSezona(){
+        return cenaSezona;
+    }
+    
+	/**
+	 * Metoda nastaví sezónní cenu za pokoj.
+	 * 
+	 * @param cenaSezona
+	 *            Sezónní cena za pokoj. 
+	 */
+	public void setCenaSezona(int cenaSezona) {
+		this.cenaSezona = cenaSezona;
+	}
 
 }

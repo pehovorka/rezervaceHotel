@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.pehovorka.rezervaceHotel.ui.ControllerSpravceMain">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,8 +21,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Hotel">
             <items>
-              <MenuItem mnemonicParsing="false" text="Nová rezervace" />
-                  <MenuItem mnemonicParsing="false" text="Nový pokoj" />
+              <MenuItem fx:id="menuItemNovaRezervace" mnemonicParsing="false" onAction="#menuItemNovaRezervaceClick" text="Nová rezervace" />
+                  <MenuItem fx:id="menuItemNovyPokoj" mnemonicParsing="false" onAction="#menuItemNovyPokojClick" text="Nový pokoj" />
             </items>
           </Menu>
         </menus>
@@ -35,16 +35,16 @@
       <VBox minWidth="350.0" prefHeight="350.0" prefWidth="10.0" GridPane.rowIndex="2">
          <children>
             <Label text="Pokoj" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <ComboBox fx:id="pokoj" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
             <Label text="Klient" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <ComboBox fx:id="klient" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
             <Label text="Datum" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <DatePicker />
+                  <DatePicker fx:id="datum" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Filtrovat">
+            <Button fx:id="buttonFiltrovat" mnemonicParsing="false" onAction="#buttonFiltrovatClick" text="Filtrovat">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -61,7 +61,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="seznamRezervaci" prefHeight="200.0" prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets top="15.0" />
