@@ -63,7 +63,7 @@ public class ControllerNovyPokoj extends GridPane {
 	
 	@FXML
 	public void buttonPotvrditClick() throws Exception{
-		if (textFieldCena.getText().equals("") || textFieldCenaSezona.getText().equals("") || textFieldNazev.getText().equals("")) {
+		if (textFieldCena.getText().equals("") || textFieldCenaSezona.getText().equals("") || textFieldNazev.getText().equals("") || comboBoxPocetLuzek.getSelectionModel().isEmpty() || comboBoxPocetLuzek.getSelectionModel().isEmpty()) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Špatně zadané údaje");
 			alert.setHeaderText("Zadejte všechny údaje!");
