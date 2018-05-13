@@ -33,6 +33,7 @@ public final class Start extends Application {
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 		primaryStage.setTitle("Výběr režimu");
+		
 	}
 
 }

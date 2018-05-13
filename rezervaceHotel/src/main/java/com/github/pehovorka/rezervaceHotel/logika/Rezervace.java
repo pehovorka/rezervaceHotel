@@ -1,5 +1,10 @@
 package com.github.pehovorka.rezervaceHotel.logika;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -33,6 +38,8 @@ public class Rezervace extends Observable {
 		for (int i = 0; i < 10; i++) {
 		        poctyLuzek[i] = i + 1;
 		}
+		File klientiSoubor = new File(getClass().getResource("/dataRezervaci/klienti.csv").getFile());
+		nactiSoubor(klientiSoubor);
 		
 	}
 	
@@ -115,6 +122,29 @@ public class Rezervace extends Observable {
     public Integer[] getPoctyLuzek(){
         return poctyLuzek;
     }
+    
+    public void nacti(String nazevSouboru) {
+    	
+    }
+    
+	public void nactiSoubor(File soubor) {
+		try (BufferedReader ctecka = new BufferedReader(new FileReader(soubor))) {
+			String radek = ctecka.readLine();
+
+			// základní cyklus programu - opakovaně se čtou příkazy a poté
+			// se provádějí do konce hry.
+
+			while (radek != null) {
+				System.out.println(radek);
+				radek = ctecka.readLine();
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Soubor nenlezen");
+		} catch (IOException e) {
+			System.out.println("Chyba vstupu");
+		}
+	}
 	
 }
 
