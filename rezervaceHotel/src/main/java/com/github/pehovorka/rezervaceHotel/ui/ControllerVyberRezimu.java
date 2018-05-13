@@ -12,6 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+/**
+ *  Třída ControllerVyberRezimu
+ * 
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou okna pro výběr režimu a logikou adventury.
+ *
+ *@author     Petr Hovorka, Aleksandr Kadesnikov
+ *@version    Alpha 1
+ */
 public class ControllerVyberRezimu extends GridPane {
 
 	private Rezervace rezervace;
@@ -21,6 +29,13 @@ public class ControllerVyberRezimu extends GridPane {
 	@FXML
 	private Button buttonZakaznik;
 
+	/**
+	 * Metoda provede inicializaci grafických prvků
+	 * 
+	 * @param rezervace
+	 *            aktuální rezervace
+	 * 
+	 */
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
 	}

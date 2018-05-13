@@ -11,6 +11,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
+/**
+ *  Třída ControllerNovaRezervace
+ * 
+ *  Kontroler, který zprostředkovává komunikaci mezi grafikou rezervačního okna a logikou adventury.
+ *
+ *@author     Petr Hovorka, Aleksandr Kadesnikov
+ *@version    Alpha 1
+ */
 public class ControllerNovaRezervace {
 	@FXML
 	private Button buttonPokracovat;
@@ -29,6 +37,13 @@ public class ControllerNovaRezervace {
 	
 	Rezervace rezervace;
 	
+	/**
+	 * Metoda provede inicializaci grafických prvků
+	 * 
+	 * @param rezervace
+	 *            aktuální rezervace
+	 * 
+	 */
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
 		

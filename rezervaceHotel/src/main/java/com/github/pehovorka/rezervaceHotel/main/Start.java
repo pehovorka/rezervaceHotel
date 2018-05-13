@@ -9,6 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/***************************************************************************
+ * Metoda, prostřednictvím níž se spouští celá aplikace.
+ *
+ * @param args
+ *            Parametry příkazového řádku
+ */
 public final class Start extends Application {
 	public static void main(String[] args) {
 		launch(args);
