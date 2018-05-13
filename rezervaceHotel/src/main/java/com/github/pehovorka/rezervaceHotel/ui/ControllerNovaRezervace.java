@@ -46,6 +46,8 @@ public class ControllerNovaRezervace {
 	 */
 	public void inicializuj(Rezervace rezervace) {
 		this.rezervace = rezervace;
+		pocetLuzek.getItems().addAll(rezervace.getPoctyLuzek());
+		pozadovanaKategorie.getItems().addAll(rezervace.getTridyPokoju());
 		
 	}
 

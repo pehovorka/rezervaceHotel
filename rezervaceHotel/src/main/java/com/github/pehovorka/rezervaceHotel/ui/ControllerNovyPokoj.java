@@ -1,5 +1,8 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.util.Map.Entry;
+
+import com.github.pehovorka.rezervaceHotel.logika.Pokoj;
 import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
 
 import javafx.fxml.FXML;
@@ -66,6 +69,34 @@ public class ControllerNovyPokoj extends GridPane {
 			alert.setHeaderText("Zadejte všechny údaje!");
 			alert.showAndWait();
 		}
+		else {
+			try {
+			Pokoj vkladany = new Pokoj(textFieldNazev.getText(),comboBoxTrida.getSelectionModel().getSelectedItem(),comboBoxPocetLuzek.getSelectionModel().getSelectedItem(),Integer.parseInt(textFieldCena.getText()),Integer.parseInt(textFieldCenaSezona.getText()));
+			if (rezervace.getPokoje().containsKey(vkladany.getNazev())) {	
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Pokoj s tímto názvem již existuje");
+			alert.setHeaderText("Zadejte jiný název pokoje, pokoj s tímto názvem již existuje!");
+			alert.showAndWait();
+			}
+			else {
+				rezervace.vlozPokoj(vkladany);
+				Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+			    stage.close();
+			    for(Entry<String, Pokoj> entry : rezervace.getPokoje().entrySet())
+			    {  
+			    	System.out.println("Název: "+ entry.getKey() + "; Třída: " +entry.getValue().getTrida() + "; Počet lůžek: " + entry.getValue().getPocetLuzek() + "; Cena: " + entry.getValue().getCena() + "; Cena v sezóně: " + entry.getValue().getCenaSezona());
+			    }
+			}
+			} 
+			catch (NumberFormatException e) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Špatný formát ceny");
+				alert.setHeaderText("Cena musí být pouze celé číslo!");
+				alert.showAndWait();
+			}
+			
+		}
 	}
 }
+
 

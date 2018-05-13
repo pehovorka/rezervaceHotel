@@ -15,6 +15,7 @@ import com.github.pehovorka.rezervaceHotel.logika.Klient;
 public class Rezervace {
 	
 	private Map<Integer, Klient> seznamKlientu;
+	private Map<String, Pokoj> seznamPokoju;
 	private boolean rezimSpravce = false;
 	private String[] tridyPokoju = {"Jednolůžko","Jednolůžko premium", "Dvoulůžko - double", "Dvoulůžko - twin", "Apartmán"};
 	private Integer[] poctyLuzek = new Integer[10];
@@ -24,7 +25,8 @@ public class Rezervace {
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
 	 */
 	public Rezervace() {
-		seznamKlientu = new HashMap<>();	
+		seznamKlientu = new HashMap<>();
+		seznamPokoju = new HashMap<>();
 		poctyLuzek[0] = 1;
 		for (int i = 0; i < 10; i++) {
 		        poctyLuzek[i] = i + 1;
@@ -36,7 +38,7 @@ public class Rezervace {
 	 * Metoda vkládá klienta do mapy seznamKlientu.
 	 * 
 	 * @param k
-	 *            Vkládáaný Klient. 
+	 *            Vkládaný Klient. 
 	 */
 	public void vlozKlienta(Klient k) {
 		seznamKlientu.put(k.getCisloOP(), k);
@@ -49,6 +51,25 @@ public class Rezervace {
      */
 	public Map<Integer, Klient> getKlienti() {	
 		return seznamKlientu;
+	}
+	
+	/**
+	 * Metoda vkládá pokoj do mapy seznamPokoju.
+	 * 
+	 * @param p
+	 *            Vkládaný pokoj. 
+	 */
+	public void vlozPokoj(Pokoj p) {
+		seznamPokoju.put(p.getNazev(), p);
+	}
+	
+    /**
+     *  Metoda vrací mapu všech pokojů.
+     *  
+     *  @return seznamPokoju Mapa všech pokojů.
+     */
+	public Map<String, Pokoj> getPokoje() {	
+		return seznamPokoju;
 	}
 
 

@@ -31,7 +31,7 @@ public class Pokoj {
 	 * @param cenaSezona
 	 *            Cena během sezóny.
 	 */
-	public Pokoj(String nazev, String trida, int pocetLuzek, int cena, int cenaSezona) {
+	public Pokoj(String nazev, String trida, Integer pocetLuzek, Integer cena, Integer cenaSezona) {
 		this.nazev = nazev;
 		this.trida = trida;
 		this.pocetLuzek = pocetLuzek;
@@ -92,7 +92,7 @@ public class Pokoj {
 	 * @param pocetLuzek
 	 *            Počet lůžek v pokoji. 
 	 */
-	public void setPocetLuzek(int pocetLuzek) {
+	public void setPocetLuzek(Integer pocetLuzek) {
 		this.pocetLuzek = pocetLuzek;
 	}
     
@@ -111,7 +111,7 @@ public class Pokoj {
 	 * @param cena
 	 *            Mimosezónní cena za pokoj. 
 	 */
-	public void setCena(int cena) {
+	public void setCena(Integer cena) {
 		this.cena = cena;
 	}
     
@@ -130,8 +130,23 @@ public class Pokoj {
 	 * @param cenaSezona
 	 *            Sezónní cena za pokoj. 
 	 */
-	public void setCenaSezona(int cenaSezona) {
+	public void setCenaSezona(Integer cenaSezona) {
 		this.cenaSezona = cenaSezona;
+	}
+	
+    /**
+     * Metoda vrací název pokoje včetně parametrů
+     *
+     * @return nazevSParametry
+     */
+    public String getNazevSParametry() {
+        String nazevSParametry = "Název: "+ getNazev() + "; Třída: " + getTrida() + "; Počet lůžek: " + getPocetLuzek() + "; Cena: " + getCena() + "; Cena v sezóně: " + getCenaSezona();
+    	return nazevSParametry;       
+    }
+	
+	@Override
+	public String toString() {
+		return getNazevSParametry();
 	}
 
 }
