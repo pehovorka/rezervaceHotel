@@ -3,7 +3,6 @@ package com.github.pehovorka.rezervaceHotel.logika;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -16,9 +15,6 @@ import java.util.Map;
 import java.util.Observable;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 /**
  * Třída Rezervace
@@ -34,7 +30,7 @@ public class Rezervace extends Observable {
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
 	private boolean rezimSpravce = false;
-	private String[] tridyPokoju = { "economy", "premium", "exclusive"};
+	private String[] tridyPokoju = { "economy", "premium", "exclusive" };
 	private Integer[] poctyLuzek = new Integer[10];
 	String klientiSoubor = "./hotelData/klienti.csv";
 	String pokojeSoubor = "./hotelData/pokoje.csv";
@@ -42,7 +38,6 @@ public class Rezervace extends Observable {
 	String pokojeResources = getClass().getResource("/dataRezervaci/pokoje.csv").getFile();
 	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
 	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
-
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
@@ -137,23 +132,25 @@ public class Rezervace extends Observable {
 	public Integer[] getPoctyLuzek() {
 		return poctyLuzek;
 	}
-	
-	
+
 	/**
 	 * Metoda pro zkopírování souborů.
 	 * 
-	 * @param soubor1 Adresa zdrojového souboru
-	 * @param soubor2 Adresa cílového souboru
-	 * @param stream InputStream zdrojového souboru
+	 * @param soubor1
+	 *            Adresa zdrojového souboru
+	 * @param soubor2
+	 *            Adresa cílového souboru
+	 * @param stream
+	 *            InputStream zdrojového souboru
 	 */
-    private void zkopirujSoubor(String soubor1, String soubor2, InputStream stream) {
+	private void zkopirujSoubor(String soubor1, String soubor2, InputStream stream) {
 
 		/* Zdrojový soubor, který bude zkopírován */
 		File zdrojovySoubor = new File(soubor1);
 
 		/* Cílový soubor */
 		File cilovySoubor = new File(soubor2);
-		
+
 		/* Pokud soubor neexistuje, tak ho vytvoř */
 		if (!zdrojovySoubor.exists()) {
 			try {
@@ -190,7 +187,7 @@ public class Rezervace extends Observable {
 				if (null != vstup) {
 					vstup.close();
 				}
-				
+
 				if (null != vystup) {
 					vystup.close();
 				}
@@ -201,33 +198,36 @@ public class Rezervace extends Observable {
 		}
 	}
 
- 
-
-
 	public void nactiSoubor(String soubor, String typ) {
 		File slozka = new File("hotelData");
 		if (!slozka.exists()) {
-		    System.out.println("Vytvářím složku: " + slozka.getName());
-		    boolean vysledek = false;
+			System.out.println("Vytvářím složku: " + slozka.getName());
+			boolean vysledek = false;
 
-		    try{
-		        slozka.mkdir();
-		        vysledek = true;
-		    } 
-		    catch(SecurityException se){
-		    	System.out.println("Nelze vytvořit složku, nemáte nedostatečné oprávnění.");
-		    }        
-		    if(vysledek) {    
-		        System.out.println("Složka vytvořena");  
-		    }
-		    try {
+			try {
+				slozka.mkdir();
+				vysledek = true;
+			} catch (SecurityException se) {
+				System.out.println("Nelze vytvořit složku, nemáte nedostatečné oprávnění.");
+			}
+			if (vysledek) {
+				System.out.println("Složka vytvořena");
+			}
+			try {
 				zkopirujSoubor(klientiResources, klientiSoubor, klientiStream);
 				zkopirujSoubor(pokojeResources, pokojeSoubor, pokojeStream);
-		    }
-		    catch(Exception e){
-		    	System.out.println("Nelze vytvořit soubory");		    	
-		    }
-		    
+				System.out.println("Kopíruji soubory");
+			} catch (Exception e) {
+				System.out.println("Nelze vytvořit soubory");
+			}
+
+		}
+
+		File souborSoubor = new File(soubor);
+		if (!souborSoubor.exists()) {
+			zkopirujSoubor(klientiResources, klientiSoubor, klientiStream);
+			zkopirujSoubor(pokojeResources, pokojeSoubor, pokojeStream);
+			System.out.println("Kopíruji soubory");
 		}
 		try (BufferedReader ctecka = new BufferedReader(new FileReader(soubor))) {
 			String radek = ctecka.readLine();
@@ -243,6 +243,7 @@ public class Rezervace extends Observable {
 						seznamKlientu.put(k.getCisloOP(), k);
 						radek = ctecka.readLine();
 					}
+
 				}
 			}
 			if (typ.equals("pokoje")) {
@@ -261,19 +262,17 @@ public class Rezervace extends Observable {
 				}
 			}
 			ctecka.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Soubor nenlezen");
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Soubor nenalezen");
-			alert.setHeaderText(":(");
-			alert.showAndWait();
+		}
+
+		catch (FileNotFoundException e) {
+			System.out.println("Soubor nenalezen");
+
 		} catch (IOException e) {
 			System.out.println("Chyba vstupu");
 		} catch (Exception e) {
 			System.out.println("Chyba při načítání řádku, neplatný počet parametrů");
 		}
-		}
-
+	}
 
 	public void ulozSoubor(String typ) throws FileNotFoundException {
 		if (typ.equals("klienti")) {
