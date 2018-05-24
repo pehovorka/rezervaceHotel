@@ -2,7 +2,7 @@ package com.github.pehovorka.rezervaceHotel.ui;
 
 import java.io.IOException;
 
-import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +24,7 @@ import javafx.stage.WindowEvent;;
  */
 public class ControllerVyberRezimu extends GridPane {
 
-	private Rezervace rezervace;
+	private Hotel rezervace;
 	
 	@FXML
 	private Button buttonSpravce;
@@ -38,7 +38,7 @@ public class ControllerVyberRezimu extends GridPane {
 	 *            aktuální rezervace
 	 * 
 	 */
-	public void inicializuj(Rezervace rezervace) {
+	public void inicializuj(Hotel rezervace) {
 		this.rezervace = rezervace;
 	}
 	

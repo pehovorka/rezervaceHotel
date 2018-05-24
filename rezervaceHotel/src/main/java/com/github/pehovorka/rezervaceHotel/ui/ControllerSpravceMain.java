@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,10 +48,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private ListView<String> seznamRezervaci;
 	
-	private Rezervace rezervace;
+	private Hotel rezervace;
 	private List<String> seznamKlientu = new ArrayList<>();
 	private List<String> seznamPokoju = new ArrayList<>();
-	
+	private List<String> seznamVsechRezervaci = new ArrayList<>();
+
 
 	
 	
@@ -62,7 +63,7 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	 *            aktuální rezervace
 	 * 
 	 */
-	public void inicializuj(Rezervace rezervace) {
+	public void inicializuj(Hotel rezervace) {
 		this.rezervace = rezervace;
 		for (String pokojKlic : rezervace.getPokoje().keySet()) {
 			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
@@ -70,10 +71,16 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
 	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
 	    }
+	    for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+	      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+	    }
 		Collections.sort(seznamPokoju);
 		Collections.sort(seznamKlientu);
-	    pokoj.getItems().addAll(seznamPokoju);
+		Collections.sort(seznamVsechRezervaci);
+
+		pokoj.getItems().addAll(seznamPokoju);
 	    klient.getItems().addAll(seznamKlientu);
+	    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 	    rezervace.addObserver(this);
 	}
 	
@@ -111,6 +118,13 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
 	public void buttonFiltrovatClick() throws Exception{	
+		boolean isMyComboBoxEmpty = klient.getSelectionModel().isEmpty();
+		boolean isMyComboBoxEmpty2 = pokoj.getSelectionModel().isEmpty();
+
+		
+		if () {
+			
+		};
 	}
 
 	@Override

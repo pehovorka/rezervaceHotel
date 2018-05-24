@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
+import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
+
 
 /**
  * Třída Rezervace
@@ -25,32 +28,37 @@ import com.github.pehovorka.rezervaceHotel.logika.Klient;
  * @author Petr Hovorka, Aleksandr Kadesnikov
  * @version Alpha 1
  */
-public class Rezervace extends Observable {
-
+public class Hotel extends Observable {
 	private Map<Integer, Klient> seznamKlientu;
 	private Map<String, Pokoj> seznamPokoju;
+	private Map<Integer, NovaRezervace> seznamRezervaci;
 	private boolean rezimSpravce = false;
 	private String[] tridyPokoju = { "economy", "premium", "exclusive" };
 	private Integer[] poctyLuzek = new Integer[10];
 	String klientiSoubor = "./hotelData/klienti.csv";
 	String pokojeSoubor = "./hotelData/pokoje.csv";
+	String rezervaceSoubor = "./hotelData/rezervace.csv";
 	String klientiResources = getClass().getResource("/dataRezervaci/klienti.csv").getFile();
 	String pokojeResources = getClass().getResource("/dataRezervaci/pokoje.csv").getFile();
+	String rezervaceResources = getClass().getResource("/dataRezervaci/rezervace.csv").getFile();
 	InputStream klientiStream = getClass().getResourceAsStream("/dataRezervaci/klienti.csv");
 	InputStream pokojeStream = getClass().getResourceAsStream("/dataRezervaci/pokoje.csv");
+	InputStream rezervaceStream = getClass().getResourceAsStream("/dataRezervaci/rezervace.csv");
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
 	 */
-	public Rezervace() {
+	public Hotel() {
 		seznamKlientu = new HashMap<>();
 		seznamPokoju = new HashMap<>();
+		seznamRezervaci = new HashMap<>();
 		poctyLuzek[0] = 1;
 		for (int i = 0; i < 10; i++) {
 			poctyLuzek[i] = i + 1;
 		}
 		nactiSoubor(klientiSoubor, "klienti");
 		nactiSoubor(pokojeSoubor, "pokoje");
+		nactiSoubor(rezervaceSoubor, "rezervace");
 
 	}
 
@@ -96,6 +104,27 @@ public class Rezervace extends Observable {
 		return seznamPokoju;
 	}
 
+	/**
+	 * Metoda vkládá rezervace do mapy rezervaci.
+	 * 
+	 * @param r
+	 *            Vkladana rezervace.
+	 */
+	public void vlozRezervaci(NovaRezervace r) {
+		seznamRezervaci.put(r.getIdRezervace(), r);
+		this.setChanged();
+		this.notifyObservers();
+	}
+
+	/**
+	 * Metoda vrací mapu všech klientů.
+	 * 
+	 * @return seznamKlientu Mapa všech klientů.
+	 */
+	public Map<Integer, NovaRezervace> getSeznamRezervaci() {
+		return seznamRezervaci;
+	}
+	
 	/**
 	 * Vrátí boolean, zda se používá režim správce či nikoli.
 	 * 
@@ -216,6 +245,7 @@ public class Rezervace extends Observable {
 			try {
 				zkopirujSoubor(klientiResources, klientiSoubor, klientiStream);
 				zkopirujSoubor(pokojeResources, pokojeSoubor, pokojeStream);
+				zkopirujSoubor(rezervaceResources, rezervaceSoubor, rezervaceStream);
 				System.out.println("Kopíruji soubory");
 			} catch (Exception e) {
 				System.out.println("Nelze vytvořit soubory");
@@ -227,10 +257,26 @@ public class Rezervace extends Observable {
 		if (!souborSoubor.exists()) {
 			zkopirujSoubor(klientiResources, klientiSoubor, klientiStream);
 			zkopirujSoubor(pokojeResources, pokojeSoubor, pokojeStream);
+			zkopirujSoubor(rezervaceResources, rezervaceSoubor, rezervaceStream);
 			System.out.println("Kopíruji soubory");
 		}
 		try (BufferedReader ctecka = new BufferedReader(new FileReader(soubor))) {
 			String radek = ctecka.readLine();
+			if (typ.equals("rezervace")) {
+				System.out.println("rezervace.csv");
+				while (radek != null) {
+					String[] cast = radek.split(",");
+					if (cast.length != 5) {
+						throw new Exception();
+					} else {
+						System.out.println(radek);
+						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), cast[1], cast[2], cast[3], cast[4]);
+						seznamRezervaci.put(r.getIdRezervace(), r);
+						radek = ctecka.readLine();
+					}
+
+				}
+			}
 			if (typ.equals("klienti")) {
 				System.out.println("klienti.csv");
 				while (radek != null) {
@@ -261,6 +307,7 @@ public class Rezervace extends Observable {
 					}
 				}
 			}
+			
 			ctecka.close();
 		}
 

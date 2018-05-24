@@ -3,7 +3,7 @@ package com.github.pehovorka.rezervaceHotel.ui;
 import java.util.Map.Entry;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
-import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -33,7 +33,7 @@ public class ControllerNovyKlient extends GridPane{
 	@FXML
 	private TextField cisloOP;
 	
-	private Rezervace rezervace;
+	private Hotel rezervace;
 	
 	/**
 	 * Metoda provede inicializaci grafických prvků
@@ -42,7 +42,7 @@ public class ControllerNovyKlient extends GridPane{
 	 *            aktuální rezervace
 	 * 
 	 */
-	public void inicializuj(Rezervace rezervace) {
+	public void inicializuj(Hotel rezervace) {
 		this.rezervace = rezervace;	
 	}
 	

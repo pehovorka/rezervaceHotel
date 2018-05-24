@@ -1,6 +1,6 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
-import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,8 +34,10 @@ public class ControllerNovaRezervace {
 	private ComboBox<Integer> pocetLuzek;
 	@FXML
 	private ComboBox<String> pozadovanaKategorie;
+	@FXML
+	private ComboBox<String> obsazeneRezervace;
 	
-	Rezervace rezervace;
+	Hotel rezervace;
 	
 	/**
 	 * Metoda provede inicializaci grafických prvků
@@ -44,10 +46,12 @@ public class ControllerNovaRezervace {
 	 *            aktuální rezervace
 	 * 
 	 */
-	public void inicializuj(Rezervace rezervace) {
+	public void inicializuj(Hotel rezervace) {
 		this.rezervace = rezervace;
 		pocetLuzek.getItems().addAll(rezervace.getPoctyLuzek());
 		pozadovanaKategorie.getItems().addAll(rezervace.getTridyPokoju());
+		//obsazeneRezervace.getItems().addAll(rezervace.getSeznamRezervaci());
+		
 		
 	}
 

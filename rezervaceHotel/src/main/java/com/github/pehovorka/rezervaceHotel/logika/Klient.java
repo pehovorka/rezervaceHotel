@@ -20,7 +20,7 @@ public class Klient {
 	 * @param jmeno
 	 *            Křestní jméno klienta (např. Josef)
 	 * @param prijmeni
-	 *            TPříjmení klienta (např. Novák).
+	 *            Příjmení klienta (např. Novák).
 	 * @param cisloOP
 	 *            Číslo občanského průkazu klienta.
 	 */

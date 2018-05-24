@@ -1,7 +1,7 @@
 package com.github.pehovorka.rezervaceHotel.main;
 
 import com.github.pehovorka.rezervaceHotel.ui.ControllerVyberRezimu;
-import com.github.pehovorka.rezervaceHotel.logika.Rezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public final class Start extends Application {
 		Parent root = loader.load();
 
 		ControllerVyberRezimu controller = loader.getController();
-		Rezervace rezervace = new Rezervace();
+		Hotel rezervace = new Hotel();
 		controller.inicializuj(rezervace);
 
 		primaryStage.setScene(new Scene(root));
