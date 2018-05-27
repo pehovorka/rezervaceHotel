@@ -1,10 +1,14 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Date;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 
@@ -71,16 +75,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
 	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
 	    }
-	    for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-	      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
-	    }
 		Collections.sort(seznamPokoju);
 		Collections.sort(seznamKlientu);
-		Collections.sort(seznamVsechRezervaci);
 
 		pokoj.getItems().addAll(seznamPokoju);
 	    klient.getItems().addAll(seznamKlientu);
-	    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 	    rezervace.addObserver(this);
 	}
 	
@@ -118,21 +117,41 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
 	public void buttonFiltrovatClick() throws Exception{	
+	    seznamRezervaci.getItems().clear();
+	    seznamVsechRezervaci.removeAll(seznamVsechRezervaci);
+	    	    
 		boolean isMyComboBoxEmpty = klient.getSelectionModel().isEmpty();
 		boolean isMyComboBoxEmpty2 = pokoj.getSelectionModel().isEmpty();
+		
 
 		
-		if () {
-			
+		if (isMyComboBoxEmpty && isMyComboBoxEmpty2 && datum.getValue() == null) {
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+		      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+		    }
+			Collections.sort(seznamVsechRezervaci);
+		    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+		}
+		if (!(datum.getValue() == null)) {
+			LocalDate localDate = datum.getValue();
+			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			System.out.println(localDate + "\n" + instant + "\n" + date);
+			//for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+		    //  	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+		    //}
 		};
+		;
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	    pokoj.getItems().clear();
 	    klient.getItems().clear();
+
 	    seznamPokoju.removeAll(seznamPokoju);
 	    seznamKlientu.removeAll(seznamKlientu);
+
 		for (String pokojKlic : rezervace.getPokoje().keySet()) {
 			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
 	    }
