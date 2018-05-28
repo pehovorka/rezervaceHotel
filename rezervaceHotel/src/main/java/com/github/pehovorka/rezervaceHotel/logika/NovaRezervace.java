@@ -14,16 +14,16 @@ import java.util.Observable;
  */
 public class NovaRezervace extends Observable {
 
-	private String datumZacatek;
-	private String datumKonec;
-	private String pokoj;
-	private String klient;
+	private Date datumZacatek;
+	private Date datumKonec;
+	private Pokoj pokoj;
+	private Klient klient;
 	private int id;
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
 	 */
-	public NovaRezervace(Integer id,String datumZacatek, String datumKonec, String pokoj, String klient) {
+	public NovaRezervace(Integer id,Date datumZacatek, Date datumKonec, Pokoj pokoj, Klient klient) {
 		this.datumKonec = datumKonec;
 		this.datumZacatek = datumZacatek;
 		this.pokoj = pokoj;
@@ -36,7 +36,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return vrací pokoj
 	    */
-	    public String getPokoj() {
+	    public Pokoj getPokoj() {
 	        return pokoj;
 	    }
 	    
@@ -45,7 +45,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param	pokoj 
 	    */
-	    public void setPokoj(String pokoj) {
+	    public void setPokoj(Pokoj pokoj) {
 	        this.pokoj = pokoj;
 	    }
 	        
@@ -54,7 +54,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return	vrací datumKonec
 	    */
-	    public String getDatumKonec() {
+	    public Date getDatumKonec() {
 	        return datumKonec;
 	    }
 	    
@@ -63,7 +63,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param Date datum konce rezervace
 	    */
-	    public void setDatumKonec(String datumKonec) {
+	    public void setDatumKonec(Date datumKonec) {
 	        this.datumKonec = datumKonec;
 	    }
 	    
@@ -72,7 +72,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return vrací den zacatku
 	    */
-	    public String getDatumZacatek() {
+	    public Date getDatumZacatek() {
 	        return datumZacatek;
 	    }
 	    
@@ -81,7 +81,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param date zacatek
 	    */
-	    public void setDatumZacatek(String datumZacatek) {
+	    public void setDatumZacatek(Date datumZacatek) {
 	        this.datumZacatek = datumZacatek;
 	    }
 	    
@@ -90,7 +90,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return vrací klienta
 	    */
-	    public String getKlient() {
+	    public Klient getKlient() {
 	        return klient;
 	    }
 	    
@@ -99,7 +99,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param String jmeno - jméno typu string
 	    */
-	    public void setKlient(String klient) {
+	    public void setKlient(Klient klient) {
 	        this.klient = klient;
 	    }
 	    
@@ -127,7 +127,7 @@ public class NovaRezervace extends Observable {
 	     * @return nazevSParametry
 	     */
 	    public String getRezervace() {
-	        String rezervaceSParametry = getIdRezervace() + ", datum začátku- " + getDatumZacatek() + ", datum konce- "  + getDatumKonec() + ", pokoj: " + getPokoj() + " pro:" + getKlient(); // klient.getCeleJmeno();
+	        String rezervaceSParametry = getIdRezervace() + ", datum začátku- " + getDatumZacatek() + ", datum konce- "  + getDatumKonec() + ", pokoj: " + getPokoj() + " pro: " + getKlient(); // klient.getCeleJmeno();
 	    	return rezervaceSParametry;       
 	    }
 		

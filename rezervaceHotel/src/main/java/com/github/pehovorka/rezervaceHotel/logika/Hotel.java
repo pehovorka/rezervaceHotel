@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +86,15 @@ public class Hotel extends Observable {
 	}
 
 	/**
+	 * Metoda vrací klienta.
+	 * 
+	 * @return urcity klienta.
+	 */
+	public Klient getKlient(Integer jmeno) {
+		return seznamKlientu.get(jmeno);
+	}
+	
+	/**
 	 * Metoda vkládá pokoj do mapy seznamPokoju.
 	 * 
 	 * @param p
@@ -104,6 +115,16 @@ public class Hotel extends Observable {
 		return seznamPokoju;
 	}
 
+	/**
+	 * Metoda vrací pokoj.
+	 * 
+	 * @return urcity pokoj.
+	 */
+	public Pokoj getPokoj(String nazev) {
+		return seznamPokoju.get(nazev);
+	}
+
+	
 	/**
 	 * Metoda vkládá rezervace do mapy rezervaci.
 	 * 
@@ -161,6 +182,11 @@ public class Hotel extends Observable {
 	public Integer[] getPoctyLuzek() {
 		return poctyLuzek;
 	}
+	
+	public NovaRezervace getNazevRezervace(Integer nazev) {
+		return seznamRezervaci.get(nazev);
+	}
+	
 
 	/**
 	 * Metoda pro zkopírování souborů.
@@ -266,11 +292,27 @@ public class Hotel extends Observable {
 				System.out.println("rezervace.csv");
 				while (radek != null) {
 					String[] cast = radek.split(",");
-					if (cast.length != 5) {
+					if (cast.length != 9) {
 						throw new Exception();
 					} else {
+						
+						String pokoj = cast[7];
+						Integer klient = Integer.parseInt(cast[8]);
 						System.out.println(radek);
-						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), cast[1], cast[2], cast[3], cast[4]);
+						int den = Integer.parseInt(cast[1]);
+						int mesic = Integer.parseInt(cast[2]);
+						int rok = Integer.parseInt(cast[3]);
+						int den2 = Integer.parseInt(cast[4]);
+						int mesic2 = Integer.parseInt(cast[5]);
+						int rok2 = Integer.parseInt(cast[6]);
+						
+						DateFormat datum = new SimpleDateFormat("dd.MM.yyyy");
+						Date dateZ = new Date(rok-1900,mesic-1,den);
+						Date dateK = new Date(rok2-1900,mesic2-1,den2);
+						Pokoj p = getPokoj(pokoj);
+						Klient k = getKlient(klient);
+						
+						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
 						seznamRezervaci.put(r.getIdRezervace(), r);
 						radek = ctecka.readLine();
 					}

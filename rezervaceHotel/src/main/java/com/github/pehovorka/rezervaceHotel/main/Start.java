@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  * @param args
  *            Parametry příkazového řádku
  */
+@SuppressWarnings("restriction")
 public final class Start extends Application {
 	public static void main(String[] args) {
 		launch(args);

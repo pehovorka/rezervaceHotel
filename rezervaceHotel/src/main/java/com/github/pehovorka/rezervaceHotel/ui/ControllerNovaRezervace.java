@@ -1,6 +1,14 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
+import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 /**
@@ -19,6 +28,7 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
+@SuppressWarnings("restriction")
 public class ControllerNovaRezervace {
 	@FXML
 	private Button buttonPokracovat;
@@ -36,6 +46,11 @@ public class ControllerNovaRezervace {
 	private ComboBox<String> pozadovanaKategorie;
 	@FXML
 	private ComboBox<String> obsazeneRezervace;
+	@FXML
+	private ListView<String> volnePokoje;
+	
+	private List<String> seznamPokoju = new ArrayList<>();
+	private List<String> seznamVolnychPokoju = new ArrayList<>();
 	
 	Hotel rezervace;
 	
@@ -70,6 +85,51 @@ public void buttonPokracovatClick() throws Exception{
 
 @FXML
 public void buttonVyhledatPokojeClick() throws Exception{	
+	volnePokoje.getItems().clear();
+    seznamVolnychPokoju.removeAll(seznamVolnychPokoju);
+    
+	for (String pokojKlic : rezervace.getPokoje().keySet()) {
+		LocalDate localDate = datumPrijezd.getValue();
+   		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+   		Date date = Date.from(instant);
+   		LocalDate localDate2 = datumOdjezd.getValue();
+   		Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
+   		Date date2 = Date.from(instant2);
+		int pocetLuzPok = rezervace.getPokoje().get(pokojKlic).getPocetLuzek();
+		String pozadKatPok = rezervace.getPokoje().get(pokojKlic).getTrida();
+		int pocetLuzUi = pocetLuzek.getValue();
+        String pozadKatUi = pozadovanaKategorie.getValue();
+        
+        /* if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
+        {seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());}; */
+        
+		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+           NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);
+           
+            int pocetLuzRez = nr.getPokoj().getPocetLuzek();
+            String pozadKatRez = nr.getPokoj().getTrida();
+       		Date datez = nr.getDatumZacatek();
+			Date datek = nr.getDatumKonec();
+			/*if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
+			{
+				if() {
+					
+				}
+				else {
+					break;
+				}
+			}*/
+			
+			
+			if ((date.before(datek) && date.after(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez)) || (date2.before(datek) && date2.after(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez))) {
+				break;
+			}
+			else {
+				seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString()); 
+			}
+		}
+	}
+	volnePokoje.getItems().addAll(seznamVolnychPokoju);
 }
 
 @FXML

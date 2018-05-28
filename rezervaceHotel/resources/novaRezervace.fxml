@@ -60,7 +60,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="volnePokoje" prefHeight="200.0" prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="buttonZrusit" mnemonicParsing="false" onAction="#buttonZrusitClick" text="Zrušit">

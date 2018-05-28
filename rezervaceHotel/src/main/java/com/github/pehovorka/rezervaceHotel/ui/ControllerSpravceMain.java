@@ -1,16 +1,20 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+
 import java.util.Date;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
+import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -33,6 +38,7 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
+@SuppressWarnings("restriction")
 public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
@@ -50,12 +56,17 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private Button buttonFiltrovat;
 	@FXML
+	private Button selectAll;
+	@FXML
 	private ListView<String> seznamRezervaci;
+	@FXML
+	private TableView<String> table;
 	
 	private Hotel rezervace;
 	private List<String> seznamKlientu = new ArrayList<>();
 	private List<String> seznamPokoju = new ArrayList<>();
 	private List<String> seznamVsechRezervaci = new ArrayList<>();
+	private List<String> seznamFilterRezervaci = new ArrayList<>();
 
 
 	
@@ -120,8 +131,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    seznamRezervaci.getItems().clear();
 	    seznamVsechRezervaci.removeAll(seznamVsechRezervaci);
 	    	    
-		boolean isMyComboBoxEmpty = klient.getSelectionModel().isEmpty();
-		boolean isMyComboBoxEmpty2 = pokoj.getSelectionModel().isEmpty();
+		boolean isMyComboBoxEmpty2 = klient.getSelectionModel().isEmpty();
+		boolean isMyComboBoxEmpty = pokoj.getSelectionModel().isEmpty();
 		
 
 		
@@ -132,16 +143,184 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 			Collections.sort(seznamVsechRezervaci);
 		    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		}
-		if (!(datum.getValue() == null)) {
+		
+		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
 			LocalDate localDate = datum.getValue();
 			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
 			Date date = Date.from(instant);
-			System.out.println(localDate + "\n" + instant + "\n" + date);
-			//for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-		    //  	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
-		    //}
+			
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+				String a2 = format.format(nr.getDatumZacatek());
+				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+				String a1 = localDate.format(format2);
+				
+				
+				Date datez = nr.getDatumZacatek();
+				Date datek = nr.getDatumKonec();
+				
+				String pokoj1 = pokoj.getValue();
+				String pokoj2 = nr.getPokoj().getNazev();
+				boolean containsP = pokoj1.contains(pokoj2);
+				
+				String klient1 = klient.getValue();
+				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
+				boolean containsK = klient1.contains(klient2);
+				
+				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsP && containsK) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		};
-		;
+		
+		if ((datum.getValue() == null) && !isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
+			
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				String pokoj1 = pokoj.getValue();
+				String pokoj2 = nr.getPokoj().getNazev();
+				boolean containsP = pokoj1.contains(pokoj2);
+				
+				String klient1 = klient.getValue();
+				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
+				boolean containsK = klient1.contains(klient2);
+				
+				if(containsP && containsK) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+		};
+		
+		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && isMyComboBoxEmpty2) {
+			LocalDate localDate = datum.getValue();
+			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+				String a2 = format.format(nr.getDatumZacatek());
+				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+				String a1 = localDate.format(format2);
+				
+				
+				Date datez = nr.getDatumZacatek();
+				Date datek = nr.getDatumKonec();
+				
+				String pokoj1 = pokoj.getValue();
+				String pokoj2 = nr.getPokoj().getNazev();
+				boolean containsP = pokoj1.contains(pokoj2);
+
+				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsP) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+		};
+		
+		if (!(datum.getValue() == null) && isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
+			LocalDate localDate = datum.getValue();
+			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+				String a2 = format.format(nr.getDatumZacatek());
+				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+				String a1 = localDate.format(format2);
+				
+				
+				Date datez = nr.getDatumZacatek();
+				Date datek = nr.getDatumKonec();
+				
+
+				String klient1 = klient.getValue();
+				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
+				boolean containsK = klient1.contains(klient2);
+				
+				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsK) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+		};
+		
+		
+		
+		if (!(datum.getValue() == null) && isMyComboBoxEmpty && isMyComboBoxEmpty2) {
+			LocalDate localDate = datum.getValue();
+			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+				String a2 = format.format(nr.getDatumZacatek());
+				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+				String a1 = localDate.format(format2);
+				
+				
+				Date datez = nr.getDatumZacatek();
+				Date datek = nr.getDatumKonec();
+				
+				if((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+		};
+		if(!isMyComboBoxEmpty && (datum.getValue() == null) && isMyComboBoxEmpty2) {
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				String pokoj1 = pokoj.getValue();
+				String pokoj2 = nr.getPokoj().getNazev();
+				
+				
+				System.out.println(pokoj1);
+				System.out.println(pokoj2);
+				boolean contains = pokoj1.contains(pokoj2);
+				if(contains) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+
+		};
+		if(!isMyComboBoxEmpty2 && (datum.getValue() == null) && isMyComboBoxEmpty) {
+			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+				
+				String klient1 = klient.getValue();
+				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
+				boolean contains = klient1.contains(klient2);
+				if(contains) {
+					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				}
+			}
+			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+
+		};
+	}
+	
+	@FXML
+	public void selectAllClick() throws Exception{
+	    seznamRezervaci.getItems().clear();
+	    seznamVsechRezervaci.removeAll(seznamVsechRezervaci);
+		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+	      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+	    }
+		Collections.sort(seznamVsechRezervaci);
+	    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 	}
 
 	@Override

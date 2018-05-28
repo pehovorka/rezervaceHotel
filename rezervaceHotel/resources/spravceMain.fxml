@@ -54,6 +54,11 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="selectAll" mnemonicParsing="false" onAction="#selectAllClick" text="Vybrat vše">
+               <VBox.margin>
+                  <Insets top="13.0" />
+               </VBox.margin>
+            </Button>
          </children>
          <GridPane.margin>
             <Insets bottom="20.0" top="20.0" />
