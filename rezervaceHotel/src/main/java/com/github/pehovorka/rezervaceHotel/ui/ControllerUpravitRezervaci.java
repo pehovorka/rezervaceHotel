@@ -29,6 +29,8 @@ public class ControllerUpravitRezervaci {
 	@FXML
 	private Button buttonZrusit;
 	@FXML
+	private Button buttonDostupnostCena;
+	@FXML
 	private DatePicker datumOd;
 	@FXML
 	private DatePicker datumDo;
@@ -78,6 +80,11 @@ public class ControllerUpravitRezervaci {
 
 @FXML
 public void buttonPotvrditClick() throws Exception{
+
+}
+
+@FXML
+public void buttonDostupnostCenaClick() throws Exception{
 
 }
 
