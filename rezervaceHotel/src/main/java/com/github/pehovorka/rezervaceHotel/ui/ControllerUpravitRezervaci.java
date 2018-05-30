@@ -38,6 +38,12 @@ public class ControllerUpravitRezervaci {
 	private ComboBox<String> comboBoxKlient;
 	@FXML
 	private Label labelRezervaceInfo;
+	@FXML
+	private Label LabelZmenaCena;
+	@FXML
+	private Label LabelPuvodniCena;
+	@FXML
+	private Label LabelPoUpraveCena;
 	
 	private List<String> seznamKlientu = new ArrayList<>();
 	private List<String> seznamPokoju = new ArrayList<>();
@@ -66,6 +72,7 @@ public class ControllerUpravitRezervaci {
 		comboBoxPokoj.getItems().addAll(seznamPokoju);
 		comboBoxKlient.getItems().addAll(seznamKlientu);
 		labelRezervaceInfo.setText(rezervace.getIdRezervace()+", Od: "+rezervace.getDatumZacatek().getDayOfMonth()+"."+rezervace.getDatumZacatek().getMonthValue()+". "+rezervace.getDatumZacatek().getYear()+", Do: "+rezervace.getDatumKonec().getDayOfMonth()+"."+rezervace.getDatumKonec().getMonthValue()+". "+rezervace.getDatumKonec().getYear()+", Pokoj: "+rezervace.getPokoj().getNazev()+", Klient: "+rezervace.getKlient());
+		LabelPuvodniCena.setText("Původní cena: "+rezervace.getCenaZaRezervaci().toString()+"Kč");
 		System.out.println(rezervace.getDatumZacatek());
 	}
 

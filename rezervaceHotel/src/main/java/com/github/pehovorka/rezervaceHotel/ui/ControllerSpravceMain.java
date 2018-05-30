@@ -330,7 +330,7 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		Stage upravitRezervaci = new Stage();
 		upravitRezervaci.setScene(new Scene(root));
 		upravitRezervaci.show();
-		upravitRezervaci.setTitle("Editace rezervace");
+		upravitRezervaci.setTitle("Editace rezervace ID: "+rezervace.getIdRezervace());
 	    }
 	}
 

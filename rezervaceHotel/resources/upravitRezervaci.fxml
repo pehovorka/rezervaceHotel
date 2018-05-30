@@ -61,6 +61,16 @@
             </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="LabelPuvodniCena" prefWidth="200.0" text="PuvodniCena" />
+                        <Label fx:id="LabelPoUpraveCena" contentDisplay="CENTER" prefWidth="200.0" text="PoUprave" />
+                        <Label fx:id="LabelZmenaCena" prefWidth="200.0" text="Zmena" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="buttonZrusit" mnemonicParsing="false" onAction="#buttonZrusitClick" text="Zrušit">

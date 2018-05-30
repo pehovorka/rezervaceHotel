@@ -1,6 +1,6 @@
 package com.github.pehovorka.rezervaceHotel.logika;
 import java.time.LocalDate;
-
+import java.time.temporal.ChronoUnit;
 import java.util.Observable;
 
 /**
@@ -19,6 +19,11 @@ public class NovaRezervace extends Observable {
 	private Pokoj pokoj;
 	private Klient klient;
 	private int id;
+	private int cenaZaRezervaci;
+	private int sezonaOdMesic = 6;
+	private int sezonaDoMesic = 9;
+	
+	//private Hotel hotel;
 
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
@@ -30,6 +35,15 @@ public class NovaRezervace extends Observable {
 		this.pokoj = pokoj;
 		this.klient = klient;
 		this.id = id;
+		System.out.println(cenaZaRezervaci);
+		LocalDate d = datumZacatek;
+		while (!d.isAfter(datumKonec.minusDays(1))) {
+			if(d.getMonthValue() <= sezonaDoMesic && d.getMonthValue() >= sezonaOdMesic)
+			{cenaZaRezervaci = cenaZaRezervaci + pokoj.getCenaSezona();}
+			else {cenaZaRezervaci = cenaZaRezervaci + pokoj.getCena();}
+			 d = d.plusDays(1);
+			}
+		System.out.println(cenaZaRezervaci);
 
 	}
 	/**
@@ -80,7 +94,7 @@ public class NovaRezervace extends Observable {
 	    /**
 	    * Setter pro nastavení data zacatku rezervace
 	    * 
-	    * @param date zacatek
+	    * @param LocalDate zacatek
 	    */
 	    public void setDatumZacatek(LocalDate datumZacatek) {
 	        this.datumZacatek = datumZacatek;
@@ -93,6 +107,15 @@ public class NovaRezervace extends Observable {
 	    */
 	    public Klient getKlient() {
 	        return klient;
+	    }
+	    
+	    /**
+	    * Getter pro získání ceny rezervace
+	    * 
+	    * @return cenaZaRezervaci vrací cenu za rezervaci
+	    */
+	    public Integer getCenaZaRezervaci() {
+	        return cenaZaRezervaci;
 	    }
 	    
 	    /**
