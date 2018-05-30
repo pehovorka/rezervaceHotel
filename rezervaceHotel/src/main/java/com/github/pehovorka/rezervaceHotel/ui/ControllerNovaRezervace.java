@@ -14,10 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
@@ -45,11 +47,8 @@ public class ControllerNovaRezervace {
 	@FXML
 	private ComboBox<String> pozadovanaKategorie;
 	@FXML
-	private ComboBox<String> obsazeneRezervace;
-	@FXML
 	private ListView<String> volnePokoje;
 	
-	private List<String> seznamPokoju = new ArrayList<>();
 	private List<String> seznamVolnychPokoju = new ArrayList<>();
 	
 	Hotel rezervace;
@@ -85,14 +84,29 @@ public void buttonPokracovatClick() throws Exception{
 
 @FXML
 public void buttonVyhledatPokojeClick() throws Exception{	
+	LocalDate date = datumPrijezd.getValue();
+	LocalDate date2 = datumOdjezd.getValue();
+	if (pozadovanaKategorie.getSelectionModel().isEmpty() || pocetLuzek.getSelectionModel().isEmpty() || datumPrijezd.getValue() == null || datumOdjezd.getValue() == null ) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatně zadané údaje");
+		alert.setHeaderText("Zadejte všechny údaje!");
+		alert.showAndWait();
+		return;
+	}
+	if (date.isAfter(date2)) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatně zadané údaje");
+		alert.setHeaderText("Datum příjezdu musí být dříve než datum odjezdu!");
+		alert.showAndWait();
+		return;
+	}
 	volnePokoje.getItems().clear();
     seznamVolnychPokoju.removeAll(seznamVolnychPokoju);
     
     for (String pokojKlic : rezervace.getPokoje().keySet()) {
 		seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
 		String nazev = rezervace.getPokoje().get(pokojKlic).getNazev();
-		LocalDate date = datumPrijezd.getValue();
-   		LocalDate date2 = datumOdjezd.getValue();
+		
 
    		
 		int pocetLuzPok = rezervace.getPokoje().get(pokojKlic).getPocetLuzek();
@@ -112,7 +126,8 @@ public void buttonVyhledatPokojeClick() throws Exception{
 			
        		if(nazev.equals(nazevRez)) {
 			
-			if (datez.equals(date) || datek.equals(date) || datez.equals(date2) || datek.equals(date2) || (date.isBefore(datek) && date.isAfter(datez)) || (date2.isBefore(datek) && date2.isAfter(datez))) {
+			if (datez.equals(date) || datek.equals(date) || datez.equals(date2) || datek.equals(date2) || (date.isBefore(datek) && date.isAfter(datez)) || 
+					(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek))) {
 				seznamVolnychPokoju.remove(rezervace.getPokoje().get(pokojKlic).toString());
 				break;
 			}
