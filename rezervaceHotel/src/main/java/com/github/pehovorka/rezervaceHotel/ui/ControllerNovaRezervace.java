@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
+@SuppressWarnings("restriction")
 public class ControllerNovaRezervace {
 	@FXML
 	private Button buttonPokracovat;
@@ -86,50 +88,43 @@ public void buttonVyhledatPokojeClick() throws Exception{
 	volnePokoje.getItems().clear();
     seznamVolnychPokoju.removeAll(seznamVolnychPokoju);
     
-	for (String pokojKlic : rezervace.getPokoje().keySet()) {
-		LocalDate localDate = datumPrijezd.getValue();
-   		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-   		LocalDate date = LocalDate.from(instant);
-   		LocalDate localDate2 = datumOdjezd.getValue();
-   		Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
-   		LocalDate date2 = LocalDate.from(instant2);
-   		
-  
+    for (String pokojKlic : rezervace.getPokoje().keySet()) {
+		seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
+		String nazev = rezervace.getPokoje().get(pokojKlic).getNazev();
+		LocalDate date = datumPrijezd.getValue();
+   		LocalDate date2 = datumOdjezd.getValue();
+
    		
 		int pocetLuzPok = rezervace.getPokoje().get(pokojKlic).getPocetLuzek();
 		String pozadKatPok = rezervace.getPokoje().get(pokojKlic).getTrida();
 		int pocetLuzUi = pocetLuzek.getValue();
         String pozadKatUi = pozadovanaKategorie.getValue();
         
-        /* if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
-        {seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());}; */
+        if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
+        {
         
 		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
            NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);
            
-            int pocetLuzRez = nr.getPokoj().getPocetLuzek();
-            String pozadKatRez = nr.getPokoj().getTrida();
+           String nazevRez = nr.getPokoj().getNazev();
        		LocalDate datez = nr.getDatumZacatek();
        		LocalDate datek = nr.getDatumKonec();
-			/*if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
-			{
-				if() {
-					
-				}
-				else {
-					break;
-				}
-			}*/
 			
+       		if(nazev.equals(nazevRez)) {
 			
-			if ((date.isBefore(datek) && date.isAfter(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez)) || (date2.isBefore(datek) && date2.isAfter(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez))) {
+			if (datez.equals(date) || datek.equals(date) || datez.equals(date2) || datek.equals(date2) || (date.isBefore(datek) && date.isAfter(datez)) || (date2.isBefore(datek) && date2.isAfter(datez))) {
+				seznamVolnychPokoju.remove(rezervace.getPokoje().get(pokojKlic).toString());
 				break;
 			}
-			else {
-				seznamVolnychPokoju.add(rezervace.getPokoje().get(pokojKlic).toString()); 
 			}
 		}
-	}
+
+		}
+		else {
+			seznamVolnychPokoju.remove(rezervace.getPokoje().get(pokojKlic).toString());
+		}
+        } 
+    Collections.sort(seznamVolnychPokoju);
 	volnePokoje.getItems().addAll(seznamVolnychPokoju);
 }
 
