@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.pehovorka.rezervaceHotel.ui.ControllerUpravitRezervaci">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -26,7 +26,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label text="Informace o rezervaci">
+            <Label fx:id="labelRezervaceInfo" text="Informace o rezervaci">
                <font>
                   <Font size="18.0" />
                </font>
@@ -40,29 +40,35 @@
                </VBox.margin>
             </Label>
             <Label text="Pokoj" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <ComboBox fx:id="comboBoxPokoj" maxWidth="1.7976931348623157E308" onAction="#comboBoxPokojClick" prefWidth="150.0" />
             <Label text="Klient" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
-            <Label text="Od kdy" />
+            <ComboBox fx:id="comboBoxKlient" maxWidth="1.7976931348623157E308" onAction="#comboBoxKlientClick" prefWidth="150.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ComboBox prefWidth="150.0" promptText="Rok" />
-                  <ComboBox prefWidth="150.0" promptText="Měsíc" />
-                  <ComboBox prefWidth="150.0" promptText="Den" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                     <children>
+                        <Label text="Od" />
+                        <DatePicker fx:id="datumOd" onAction="#datumOdClick" prefWidth="250.0" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="300.0">
+                     <children>
+                        <Label text="Do" />
+                        <DatePicker fx:id="datumDo" onAction="#datumDoClick" prefWidth="250.0" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <Label text="Počet dní" />
-            <TextField />
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <HBox prefHeight="50.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Zrušit">
+                        <Button fx:id="buttonZrusit" mnemonicParsing="false" onAction="#buttonZrusitClick" text="Zrušit">
                            <HBox.margin>
                               <Insets left="250.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Potvrdit">
+                        <Button fx:id="buttonPotvrdit" mnemonicParsing="false" onAction="#buttonPotvrditClick" text="Potvrdit">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>

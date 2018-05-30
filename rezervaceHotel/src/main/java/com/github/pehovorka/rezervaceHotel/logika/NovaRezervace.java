@@ -1,5 +1,5 @@
 package com.github.pehovorka.rezervaceHotel.logika;
-import java.util.Date;
+import java.time.LocalDate;
 
 import java.util.Observable;
 
@@ -14,8 +14,8 @@ import java.util.Observable;
  */
 public class NovaRezervace extends Observable {
 
-	private Date datumZacatek;
-	private Date datumKonec;
+	private LocalDate datumZacatek;
+	private LocalDate datumKonec;
 	private Pokoj pokoj;
 	private Klient klient;
 	private int id;
@@ -23,9 +23,10 @@ public class NovaRezervace extends Observable {
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
 	 */
-	public NovaRezervace(Integer id,Date datumZacatek, Date datumKonec, Pokoj pokoj, Klient klient) {
-		this.datumKonec = datumKonec;
+	//public NovaRezervace(Integer id,Date datumZacatek, Date datumKonec, Pokoj pokoj, Klient klient) {
+	public NovaRezervace(Integer id, LocalDate datumZacatek, LocalDate datumKonec, Pokoj pokoj, Klient klient) {
 		this.datumZacatek = datumZacatek;
+		this.datumKonec = datumKonec;
 		this.pokoj = pokoj;
 		this.klient = klient;
 		this.id = id;
@@ -54,7 +55,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return	vrací datumKonec
 	    */
-	    public Date getDatumKonec() {
+	    public LocalDate getDatumKonec() {
 	        return datumKonec;
 	    }
 	    
@@ -63,7 +64,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param Date datum konce rezervace
 	    */
-	    public void setDatumKonec(Date datumKonec) {
+	    public void setDatumKonec(LocalDate datumKonec) {
 	        this.datumKonec = datumKonec;
 	    }
 	    
@@ -72,7 +73,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @return vrací den zacatku
 	    */
-	    public Date getDatumZacatek() {
+	    public LocalDate getDatumZacatek() {
 	        return datumZacatek;
 	    }
 	    
@@ -81,7 +82,7 @@ public class NovaRezervace extends Observable {
 	    * 
 	    * @param date zacatek
 	    */
-	    public void setDatumZacatek(Date datumZacatek) {
+	    public void setDatumZacatek(LocalDate datumZacatek) {
 	        this.datumZacatek = datumZacatek;
 	    }
 	    
@@ -126,8 +127,8 @@ public class NovaRezervace extends Observable {
 	     *
 	     * @return nazevSParametry
 	     */
-	    public String getRezervace() {
-	        String rezervaceSParametry = getIdRezervace() + ", datum začátku- " + getDatumZacatek() + ", datum konce- "  + getDatumKonec() + ", pokoj: " + getPokoj() + " pro: " + getKlient(); // klient.getCeleJmeno();
+		public String getRezervace() {
+	        String rezervaceSParametry = getIdRezervace()+", Od: "+getDatumZacatek().getDayOfMonth()+"."+getDatumZacatek().getMonthValue()+". "+getDatumZacatek().getYear()+", Do: "+getDatumKonec().getDayOfMonth()+"."+getDatumKonec().getMonthValue()+". "+getDatumKonec().getYear()+", Pokoj: "+getPokoj().getNazev()+", Klient: "+getKlient();
 	    	return rezervaceSParametry;       
 	    }
 		

@@ -71,7 +71,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <ListView fx:id="seznamRezervaci" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="seznamRezervaci" onMouseClicked="#seznamRezervaciClick" prefHeight="200.0" prefWidth="200.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets top="15.0" />

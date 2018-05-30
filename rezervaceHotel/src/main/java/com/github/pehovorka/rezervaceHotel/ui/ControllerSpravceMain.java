@@ -1,18 +1,11 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import java.util.Date;
-
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
 
@@ -38,7 +31,6 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-@SuppressWarnings("restriction")
 public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
@@ -62,7 +54,7 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private TableView<String> table;
 	
-	private Hotel rezervace;
+	private Hotel hotel;
 	private List<String> seznamKlientu = new ArrayList<>();
 	private List<String> seznamPokoju = new ArrayList<>();
 	private List<String> seznamVsechRezervaci = new ArrayList<>();
@@ -74,24 +66,24 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	/**
 	 * Metoda provede inicializaci grafických prvků
 	 * 
-	 * @param rezervace
-	 *            aktuální rezervace
+	 * @param hotel
+	 *            aktuální hotel
 	 * 
 	 */
-	public void inicializuj(Hotel rezervace) {
-		this.rezervace = rezervace;
-		for (String pokojKlic : rezervace.getPokoje().keySet()) {
-			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
+	public void inicializuj(Hotel hotel) {
+		this.hotel = hotel;
+		for (String pokojKlic : hotel.getPokoje().keySet()) {
+			seznamPokoju.add(hotel.getPokoje().get(pokojKlic).toString());
 	    }
-	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
-	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
+	    for (Integer klientKlic : hotel.getKlienti().keySet()) {
+	      	seznamKlientu.add(hotel.getKlienti().get(klientKlic).toString());
 	    }
 		Collections.sort(seznamPokoju);
 		Collections.sort(seznamKlientu);
 
 		pokoj.getItems().addAll(seznamPokoju);
 	    klient.getItems().addAll(seznamKlientu);
-	    rezervace.addObserver(this);
+	    hotel.addObserver(this);
 	}
 	
 	@FXML
@@ -100,7 +92,7 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		loader.setLocation(getClass().getResource("/novaRezervace.fxml"));
 		Parent root = loader.load();
 		ControllerNovaRezervace controller = loader.getController();
-		controller.inicializuj(rezervace);
+		controller.inicializuj(hotel);
 		Stage novaRezervace = new Stage();
 		novaRezervace.setScene(new Scene(root));
 		novaRezervace.show();
@@ -113,7 +105,7 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		loader.setLocation(getClass().getResource("/novyPokoj.fxml"));
 		Parent root = loader.load();
 		ControllerNovyPokoj controller = loader.getController();
-		controller.inicializuj(rezervace);
+		controller.inicializuj(hotel);
 		Stage novyPokoj = new Stage();
 		novyPokoj.setScene(new Scene(root));
 		novyPokoj.show();
@@ -122,8 +114,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	
 	@FXML
 	public void menuItemUlozitClick() throws Exception{
-		rezervace.ulozSoubor("klienti");
-		rezervace.ulozSoubor("pokoje");
+		hotel.ulozSoubor("klienti");
+		hotel.ulozSoubor("pokoje");
 	}
 	
 	@FXML
@@ -137,29 +129,29 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 
 		
 		if (isMyComboBoxEmpty && isMyComboBoxEmpty2 && datum.getValue() == null) {
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-		      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+		      	seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 		    }
 			Collections.sort(seznamVsechRezervaci);
 		    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		}
 		
 		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
-			LocalDate localDate = datum.getValue();
-			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			Date date = Date.from(instant);
+			LocalDate date = datum.getValue();
+/*			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			LocalDate date = LocalDate.from(instant);*/
 			
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
-				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 				String a2 = format.format(nr.getDatumZacatek());
 				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = localDate.format(format2);
+				String a1 = date.format(format2);*/
 				
 				
-				Date datez = nr.getDatumZacatek();
-				Date datek = nr.getDatumKonec();
+				LocalDate datez = nr.getDatumZacatek();
+				LocalDate datek = nr.getDatumKonec();
 				
 				String pokoj1 = pokoj.getValue();
 				String pokoj2 = nr.getPokoj().getNazev();
@@ -169,8 +161,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
 				boolean containsK = klient1.contains(klient2);
 				
-				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsP && containsK) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				if(((date.isAfter(datez) || date.equals(datez)) && (date.isBefore(datek) || date.equals(datek))) && containsP && containsK) {
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
@@ -178,8 +170,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		if ((datum.getValue() == null) && !isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
 			
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
 				String pokoj1 = pokoj.getValue();
 				String pokoj2 = nr.getPokoj().getNazev();
@@ -190,64 +182,64 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 				boolean containsK = klient1.contains(klient2);
 				
 				if(containsP && containsK) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		};
 		
 		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && isMyComboBoxEmpty2) {
-			LocalDate localDate = datum.getValue();
-			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			Date date = Date.from(instant);
+			LocalDate date = datum.getValue();
+			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			LocalDate date = LocalDate.from(instant);*/
 			
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
-				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 				String a2 = format.format(nr.getDatumZacatek());
 				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = localDate.format(format2);
+				String a1 = date.format(format2);*/
 				
 				
-				Date datez = nr.getDatumZacatek();
-				Date datek = nr.getDatumKonec();
+				LocalDate datez = nr.getDatumZacatek();
+				LocalDate datek = nr.getDatumKonec();
 				
 				String pokoj1 = pokoj.getValue();
 				String pokoj2 = nr.getPokoj().getNazev();
 				boolean containsP = pokoj1.contains(pokoj2);
 
-				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsP) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				if(((date.isAfter(datez) || date.equals(datez)) && (date.isBefore(datek) || date.equals(datek))) && containsP) {
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		};
 		
 		if (!(datum.getValue() == null) && isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
-			LocalDate localDate = datum.getValue();
-			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			Date date = Date.from(instant);
+			LocalDate date = datum.getValue();
+			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			LocalDate date = LocalDate.from(instant);*/
 			
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
-				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 				String a2 = format.format(nr.getDatumZacatek());
 				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = localDate.format(format2);
+				String a1 = date.format(format2);*/
 				
 				
-				Date datez = nr.getDatumZacatek();
-				Date datek = nr.getDatumKonec();
+				LocalDate datez = nr.getDatumZacatek();
+				LocalDate datek = nr.getDatumKonec();
 				
 
 				String klient1 = klient.getValue();
 				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
 				boolean containsK = klient1.contains(klient2);
 				
-				if(((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) && containsK) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				if(((date.isAfter(datez) || date.equals(datez)) && (date.isBefore(datek) || date.equals(datek))) && containsK) {
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
@@ -256,31 +248,31 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		
 		if (!(datum.getValue() == null) && isMyComboBoxEmpty && isMyComboBoxEmpty2) {
-			LocalDate localDate = datum.getValue();
-			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			Date date = Date.from(instant);
+			LocalDate date = datum.getValue();
+			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+			LocalDate date = LocalDate.from(instant);*/
 			
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
-				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 				String a2 = format.format(nr.getDatumZacatek());
 				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = localDate.format(format2);
+				String a1 = date.format(format2);*/
 				
 				
-				Date datez = nr.getDatumZacatek();
-				Date datek = nr.getDatumKonec();
+				LocalDate datez = nr.getDatumZacatek();
+				LocalDate datek = nr.getDatumKonec();
 				
-				if((date.after(datez) || date.equals(datez)) && (date.before(datek) || date.equals(datek))) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+				if((date.isAfter(datez) || date.equals(datez)) && (date.isBefore(datek) || date.equals(datek))) {
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 		};
 		if(!isMyComboBoxEmpty && (datum.getValue() == null) && isMyComboBoxEmpty2) {
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
 				String pokoj1 = pokoj.getValue();
 				String pokoj2 = nr.getPokoj().getNazev();
@@ -290,21 +282,21 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 				System.out.println(pokoj2);
 				boolean contains = pokoj1.contains(pokoj2);
 				if(contains) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 
 		};
 		if(!isMyComboBoxEmpty2 && (datum.getValue() == null) && isMyComboBoxEmpty) {
-			for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-				NovaRezervace nr = rezervace.getSeznamRezervaci().get(rezervaceId);	
+			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
 				
 				String klient1 = klient.getValue();
 				String klient2 = String.valueOf(nr.getKlient().getCisloOP());
 				boolean contains = klient1.contains(klient2);
 				if(contains) {
-					seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+					seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 				}
 			}
 			seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
@@ -316,11 +308,30 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	public void selectAllClick() throws Exception{
 	    seznamRezervaci.getItems().clear();
 	    seznamVsechRezervaci.removeAll(seznamVsechRezervaci);
-		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
-	      	seznamVsechRezervaci.add(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+		for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+	      	seznamVsechRezervaci.add(hotel.getSeznamRezervaci().get(rezervaceId).toString());
 	    }
 		Collections.sort(seznamVsechRezervaci);
 	    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
+	}
+	
+	
+	@FXML
+	public void seznamRezervaciClick() throws Exception{
+	    if (seznamRezervaci.getSelectionModel().isEmpty()) {}
+	    else {
+	    System.out.println(hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0])));
+		NovaRezervace rezervace = hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0]));
+	    FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/upravitRezervaci.fxml"));
+		Parent root = loader.load();
+		ControllerUpravitRezervaci controller = loader.getController();
+		controller.inicializuj(hotel,rezervace);
+		Stage upravitRezervaci = new Stage();
+		upravitRezervaci.setScene(new Scene(root));
+		upravitRezervaci.show();
+		upravitRezervaci.setTitle("Editace rezervace");
+	    }
 	}
 
 	@Override
@@ -331,11 +342,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    seznamPokoju.removeAll(seznamPokoju);
 	    seznamKlientu.removeAll(seznamKlientu);
 
-		for (String pokojKlic : rezervace.getPokoje().keySet()) {
-			seznamPokoju.add(rezervace.getPokoje().get(pokojKlic).toString());
+		for (String pokojKlic : hotel.getPokoje().keySet()) {
+			seznamPokoju.add(hotel.getPokoje().get(pokojKlic).toString());
 	    }
-	    for (Integer klientKlic : rezervace.getKlienti().keySet()) {
-	      	seznamKlientu.add(rezervace.getKlienti().get(klientKlic).toString());
+	    for (Integer klientKlic : hotel.getKlienti().keySet()) {
+	      	seznamKlientu.add(hotel.getKlienti().get(klientKlic).toString());
 	    }
 		seznamPokoju.sort(String.CASE_INSENSITIVE_ORDER);
 		seznamKlientu.sort(String.CASE_INSENSITIVE_ORDER);

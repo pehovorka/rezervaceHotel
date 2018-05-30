@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -85,6 +83,7 @@ public class Hotel extends Observable {
 		return seznamKlientu;
 	}
 
+
 	/**
 	 * Metoda vrací klienta.
 	 * 
@@ -138,9 +137,9 @@ public class Hotel extends Observable {
 	}
 
 	/**
-	 * Metoda vrací mapu všech klientů.
+	 * Metoda vrací mapu všech rezervací.
 	 * 
-	 * @return seznamKlientu Mapa všech klientů.
+	 * @return seznamRezervaci Mapa všech rezervací.
 	 */
 	public Map<Integer, NovaRezervace> getSeznamRezervaci() {
 		return seznamRezervaci;
@@ -306,12 +305,13 @@ public class Hotel extends Observable {
 						int mesic2 = Integer.parseInt(cast[5]);
 						int rok2 = Integer.parseInt(cast[6]);
 						
-						DateFormat datum = new SimpleDateFormat("dd.MM.yyyy");
-						Date dateZ = new Date(rok-1900,mesic-1,den);
-						Date dateK = new Date(rok2-1900,mesic2-1,den2);
+						LocalDate dateZ = LocalDate.of(rok, mesic, den);
+						LocalDate dateK = LocalDate.of(rok2, mesic2, den2);
+						
 						Pokoj p = getPokoj(pokoj);
 						Klient k = getKlient(klient);
 						
+						//NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
 						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
 						seznamRezervaci.put(r.getIdRezervace(), r);
 						radek = ctecka.readLine();

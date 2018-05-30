@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
@@ -28,7 +27,6 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-@SuppressWarnings("restriction")
 public class ControllerNovaRezervace {
 	@FXML
 	private Button buttonPokracovat;
@@ -91,10 +89,13 @@ public void buttonVyhledatPokojeClick() throws Exception{
 	for (String pokojKlic : rezervace.getPokoje().keySet()) {
 		LocalDate localDate = datumPrijezd.getValue();
    		Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-   		Date date = Date.from(instant);
+   		LocalDate date = LocalDate.from(instant);
    		LocalDate localDate2 = datumOdjezd.getValue();
    		Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
-   		Date date2 = Date.from(instant2);
+   		LocalDate date2 = LocalDate.from(instant2);
+   		
+  
+   		
 		int pocetLuzPok = rezervace.getPokoje().get(pokojKlic).getPocetLuzek();
 		String pozadKatPok = rezervace.getPokoje().get(pokojKlic).getTrida();
 		int pocetLuzUi = pocetLuzek.getValue();
@@ -108,8 +109,8 @@ public void buttonVyhledatPokojeClick() throws Exception{
            
             int pocetLuzRez = nr.getPokoj().getPocetLuzek();
             String pozadKatRez = nr.getPokoj().getTrida();
-       		Date datez = nr.getDatumZacatek();
-			Date datek = nr.getDatumKonec();
+       		LocalDate datez = nr.getDatumZacatek();
+       		LocalDate datek = nr.getDatumKonec();
 			/*if((pocetLuzPok == pocetLuzUi) && (pozadKatUi.contains(pozadKatPok))) 
 			{
 				if() {
@@ -121,7 +122,7 @@ public void buttonVyhledatPokojeClick() throws Exception{
 			}*/
 			
 			
-			if ((date.before(datek) && date.after(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez)) || (date2.before(datek) && date2.after(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez))) {
+			if ((date.isBefore(datek) && date.isAfter(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez)) || (date2.isBefore(datek) && date2.isAfter(datez) && pocetLuzUi==pocetLuzRez && pozadKatUi.equals(pozadKatRez))) {
 				break;
 			}
 			else {
