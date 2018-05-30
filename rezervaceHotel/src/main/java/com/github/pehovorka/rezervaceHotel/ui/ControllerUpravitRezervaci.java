@@ -1,11 +1,14 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
+import com.github.pehovorka.rezervaceHotel.logika.Klient;
 import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Pokoj;
 
 import javafx.fxml.FXML;
 
@@ -23,6 +26,7 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
+@SuppressWarnings("restriction")
 public class ControllerUpravitRezervaci {
 	@FXML
 	private Button buttonPotvrdit;
@@ -81,6 +85,18 @@ public class ControllerUpravitRezervaci {
 @FXML
 public void buttonPotvrditClick() throws Exception{
 
+	String p = comboBoxPokoj.getValue();
+    Pokoj pokoj = hotel.getPokoje().get(p);
+    rezervace.setPokoj(pokoj);
+	
+    String k = comboBoxKlient.getValue();
+    Klient klient = hotel.getKlienti().get(k);
+    rezervace.setKlient(klient);
+    
+    LocalDate date = datumOd.getValue();
+	LocalDate date2 = datumDo.getValue();
+	rezervace.setDatumZacatek(date);
+	rezervace.setDatumZacatek(date2);
 }
 
 @FXML

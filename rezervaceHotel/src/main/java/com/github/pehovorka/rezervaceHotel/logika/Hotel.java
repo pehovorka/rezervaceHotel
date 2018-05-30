@@ -137,6 +137,18 @@ public class Hotel extends Observable {
 	}
 
 	/**
+	 * Metoda odebere rezervace z mapy rezervaci.
+	 * 
+	 * @param r
+	 *            Odebrana rezervace.
+	 */
+	public void odeberRezervaci(NovaRezervace r) {
+		seznamRezervaci.remove(r.getIdRezervace(), r);
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	/**
 	 * Metoda vrací mapu všech rezervací.
 	 * 
 	 * @return seznamRezervaci Mapa všech rezervací.
