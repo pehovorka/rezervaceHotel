@@ -56,7 +56,6 @@ public class ControllerUpravitRezervaci {
 	
 	Hotel hotel;
 	NovaRezervace rezervace;
-	NovaRezervace rezervaceOld;
 	
 	/**
 	 * Metoda provede inicializaci grafických prvků
@@ -65,10 +64,9 @@ public class ControllerUpravitRezervaci {
 	 *            aktuální hotel
 	 * 
 	 */
-	public void inicializuj(Hotel hotel, NovaRezervace rezervace, NovaRezervace rezervaceOld) {
+	public void inicializuj(Hotel hotel, NovaRezervace rezervace) {
 		this.hotel = hotel;
 		this.rezervace = rezervace;
-		this.rezervace = rezervaceOld;
 		for (String pokojKlic : hotel.getPokoje().keySet()) {
 			seznamPokoju.add(hotel.getPokoje().get(pokojKlic).toString());
 	    }

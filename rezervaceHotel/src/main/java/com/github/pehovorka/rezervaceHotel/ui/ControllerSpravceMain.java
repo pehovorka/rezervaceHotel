@@ -61,7 +61,6 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	private List<String> seznamKlientu = new ArrayList<>();
 	private List<String> seznamPokoju = new ArrayList<>();
 	private List<String> seznamVsechRezervaci = new ArrayList<>();
-	private List<String> seznamFilterRezervaci = new ArrayList<>();
 
 
 	
@@ -339,12 +338,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    else {
 	    System.out.println(hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0])));
 		NovaRezervace rezervace = hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0]));
-		NovaRezervace rezervaceOld = hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0]));
 	    FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/upravitRezervaci.fxml"));
 		Parent root = loader.load();
 		ControllerUpravitRezervaci controller = loader.getController();
-		controller.inicializuj(hotel,rezervace, rezervaceOld);
+		controller.inicializuj(hotel,rezervace);
 		Stage upravitRezervaci = new Stage();
 		upravitRezervaci.setScene(new Scene(root));
 		upravitRezervaci.show();

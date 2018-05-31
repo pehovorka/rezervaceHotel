@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
+import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -35,6 +36,7 @@ public class ControllerKlient extends GridPane{
 	
 	private Hotel rezervace;
 	
+	private NovaRezervace nr;
 	/**
 	 * Metoda provede inicializaci grafických prvků
 	 * 
@@ -66,6 +68,9 @@ public class ControllerKlient extends GridPane{
 		else {
 		System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
 		rezervace.vlozKlienta(vkladany);
+		
+		int op = vkladany.getCisloOP();
+		
 		Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
 	    stage.close();
 	    for(Entry<Integer, Klient> entry : rezervace.getKlienti().entrySet())
