@@ -56,6 +56,7 @@ public class ControllerUpravitRezervaci {
 	
 	Hotel hotel;
 	NovaRezervace rezervace;
+	NovaRezervace rezervaceOld;
 	
 	/**
 	 * Metoda provede inicializaci grafických prvků
@@ -64,9 +65,10 @@ public class ControllerUpravitRezervaci {
 	 *            aktuální hotel
 	 * 
 	 */
-	public void inicializuj(Hotel hotel, NovaRezervace rezervace) {
+	public void inicializuj(Hotel hotel, NovaRezervace rezervace, NovaRezervace rezervaceOld) {
 		this.hotel = hotel;
 		this.rezervace = rezervace;
+		this.rezervace = rezervaceOld;
 		for (String pokojKlic : hotel.getPokoje().keySet()) {
 			seznamPokoju.add(hotel.getPokoje().get(pokojKlic).toString());
 	    }
@@ -85,18 +87,23 @@ public class ControllerUpravitRezervaci {
 @FXML
 public void buttonPotvrditClick() throws Exception{
 
-	String p = comboBoxPokoj.getValue();
+	String strP = comboBoxPokoj.getValue();
+	String p = strP.substring(0,4);
     Pokoj pokoj = hotel.getPokoje().get(p);
     rezervace.setPokoj(pokoj);
-	
-    String k = comboBoxKlient.getValue();
+    
+    String str = comboBoxKlient.getValue();
+    String str2 = str.substring(0, str.length() - 1);
+    String k1 = str2.substring(str2.length()-9);
+    Integer k = Integer.parseInt(k1);
+    
     Klient klient = hotel.getKlienti().get(k);
     rezervace.setKlient(klient);
     
     LocalDate date = datumOd.getValue();
 	LocalDate date2 = datumDo.getValue();
 	rezervace.setDatumZacatek(date);
-	rezervace.setDatumZacatek(date2);
+	rezervace.setDatumKonec(date2);
 }
 
 @FXML

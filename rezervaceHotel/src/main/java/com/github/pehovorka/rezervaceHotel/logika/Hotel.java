@@ -406,6 +406,28 @@ public class Hotel extends Observable {
 			}
 			System.out.println("Ukládám pokoje...");
 		}
+		
+		if (typ.equals("rezervace")) {
+			FileOutputStream rezervaceOutStream = new FileOutputStream(rezervaceSoubor);
+			try (BufferedWriter zapisovac = new BufferedWriter(new OutputStreamWriter(rezervaceOutStream))) {
+				for (Integer rezervaceKlic : getSeznamRezervaci().keySet()) {
+					String radek = getSeznamRezervaci().get(rezervaceKlic).getIdRezervace() + "," 
+				+ getSeznamRezervaci().get(rezervaceKlic).getDatumZacatek().getDayOfMonth() + "," + 
+				getSeznamRezervaci().get(rezervaceKlic).getDatumZacatek().getMonth().getValue() + "," +	
+				getSeznamRezervaci().get(rezervaceKlic).getDatumZacatek().getYear() + "," +		
+				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getDayOfMonth() + "," + 
+				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getMonth().getValue() + "," +	
+				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getYear() + "," 		
+				+ getSeznamRezervaci().get(rezervaceKlic).getPokoj().getNazev() + "," + getSeznamRezervaci().get(rezervaceKlic).getKlient().getCisloOP();
+					zapisovac.write(radek);
+					zapisovac.newLine();
+					
+				}
+				zapisovac.close();
+			} catch (Exception e) {
+			}
+			System.out.println("Ukládám rezervace...");
+		}
 	}
 
 }

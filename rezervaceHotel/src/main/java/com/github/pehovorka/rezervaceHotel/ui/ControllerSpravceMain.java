@@ -37,6 +37,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	@FXML
 	private MenuItem menuItemNovaRezervace;
 	@FXML
+	private MenuItem menuItemNovyKlient;
+	@FXML
 	private MenuItem menuItemNovyPokoj;
 	@FXML
 	private MenuItem menuItemUlozit;
@@ -114,9 +116,23 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	}
 	
 	@FXML
+	public void menuItemNovyKlientClick() throws Exception{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/novyKlient.fxml"));
+		Parent root = loader.load();
+		ControllerNovyKlient controller = loader.getController();
+		controller.inicializuj(hotel);
+		Stage novyPokoj = new Stage();
+		novyPokoj.setScene(new Scene(root));
+		novyPokoj.show();
+		novyPokoj.setTitle("Nový Klient");
+	}
+	@FXML
 	public void menuItemUlozitClick() throws Exception{
 		hotel.ulozSoubor("klienti");
 		hotel.ulozSoubor("pokoje");
+		hotel.ulozSoubor("rezervace");
+
 	}
 	
 	@FXML
@@ -323,11 +339,12 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    else {
 	    System.out.println(hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0])));
 		NovaRezervace rezervace = hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0]));
+		NovaRezervace rezervaceOld = hotel.getSeznamRezervaci().get(Integer.parseInt(seznamRezervaci.getSelectionModel().getSelectedItem().split(",")[0]));
 	    FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/upravitRezervaci.fxml"));
 		Parent root = loader.load();
 		ControllerUpravitRezervaci controller = loader.getController();
-		controller.inicializuj(hotel,rezervace);
+		controller.inicializuj(hotel,rezervace, rezervaceOld);
 		Stage upravitRezervaci = new Stage();
 		upravitRezervaci.setScene(new Scene(root));
 		upravitRezervaci.show();

@@ -72,9 +72,9 @@ public class ControllerNovaRezervace {
 @FXML
 public void buttonPokracovatClick() throws Exception{
 	FXMLLoader loader = new FXMLLoader();
-	loader.setLocation(getClass().getResource("/novyKlient.fxml"));
+	loader.setLocation(getClass().getResource("/klient.fxml"));
 	Parent root = loader.load();
-	ControllerNovyKlient controller = loader.getController();
+	ControllerKlient controller = loader.getController();
 	controller.inicializuj(rezervace);
 	Stage novyKlient = new Stage();
 	novyKlient.setScene(new Scene(root));
