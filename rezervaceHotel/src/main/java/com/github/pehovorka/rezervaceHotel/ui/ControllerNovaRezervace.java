@@ -197,7 +197,7 @@ public void klientPopisClick() throws Exception{
 
 @FXML
 public void buttonPotvrditClick() throws Exception{	
-	if (jmeno.getText().equals("") || prijmeni.getText().equals("") || cisloOP.getText().equals("")) {
+	if (jmeno.getText().equals("") || prijmeni.getText().equals("") || cisloOP.getText().equals("") || pozadovanaKategorie.getSelectionModel().isEmpty() || pocetLuzek.getSelectionModel().isEmpty() || datumPrijezd.getValue() == null || datumOdjezd.getValue() == null || volnePokoje.getSelectionModel().isEmpty()) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Špatně zadané údaje");
 		alert.setHeaderText("Zadejte všechny údaje!");
@@ -206,10 +206,32 @@ public void buttonPotvrditClick() throws Exception{
 	else {
 	try {
 	Klient vkladany = new Klient(jmeno.getText(),prijmeni.getText(),Integer.parseInt(cisloOP.getText()));
-	if (rezervace.getKlienti().containsKey(vkladany.getCisloOP()) && (!rezervace.getKlienti().get(vkladany.getCisloOP()).getJmeno().equals(vkladany.getJmeno()) || !rezervace.getKlienti().get(vkladany.getCisloOP()).getPrijmeni().equals(vkladany.getPrijmeni()))) {	
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Tento OP je již v databázi");
-			alert.setHeaderText("Toto číslo občanského průkazu již zadal někdo kdo se jmenuje jinak než vy!");
+	if (rezervace.getKlienti().containsKey(vkladany.getCisloOP())) {	
+			
+		int id = 0; 
+		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+			 id = rezervaceId;
+			 System.out.println(id);
+		 }
+		String p = volnePokoje.getSelectionModel().getSelectedItem();
+		String pok = p.substring(0, 4);
+		Pokoj pokoj = rezervace.getPokoje().get(pok);
+		
+		
+		
+		String op = cisloOP.getText();
+		Integer k = Integer.parseInt(op);
+        Klient klient = rezervace.getKlienti().get(k);
+		LocalDate date = datumPrijezd.getValue();
+		LocalDate date2 = datumOdjezd.getValue();
+		int idR = id + 1;
+		 System.out.println(idR);
+		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
+		rezervace.vlozRezervaci(nr);
+		
+		    Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Rezervace byla dokončena.");
+			alert.setHeaderText("Děkujeme že jste opět využil(a) naše služby! Tešíme se na Vás.");
 			alert.showAndWait();
 	}
 	else {
@@ -238,6 +260,11 @@ public void buttonPotvrditClick() throws Exception{
 		 System.out.println(idR);
 		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
 		rezervace.vlozRezervaci(nr);
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Rezervace byla dokončena.");
+		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás");
+		alert.showAndWait();
 	//Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
     //stage.close();
     for(Entry<Integer, Klient> entry : rezervace.getKlienti().entrySet())
