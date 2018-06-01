@@ -60,7 +60,7 @@ public class ControllerUpravitRezervaci {
 	/**
 	 * Metoda provede inicializaci grafických prvků
 	 * 
-	 * @param hotel
+	 * @param hotel7
 	 *            aktuální hotel
 	 * 
 	 */

@@ -6,9 +6,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
+import com.github.pehovorka.rezervaceHotel.logika.Klient;
 import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
+import com.github.pehovorka.rezervaceHotel.logika.Pokoj;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -48,10 +54,22 @@ public class ControllerNovaRezervace {
 	private ComboBox<String> pozadovanaKategorie;
 	@FXML
 	private ListView<String> volnePokoje;
+	@FXML
+	private TextField klientPopis;
+	
+	@FXML
+	private Button buttonPotvrdit;	
+	@FXML
+	private TextField jmeno;
+	@FXML
+	private TextField prijmeni;
+	@FXML
+	private TextField cisloOP;
 	
 	private List<String> seznamVolnychPokoju = new ArrayList<>();
 	
 	Hotel rezervace;
+	NovaRezervace nr;
 	
 	/**
 	 * Metoda provede inicializaci grafických prvků
@@ -74,8 +92,8 @@ public void buttonPokracovatClick() throws Exception{
 	FXMLLoader loader = new FXMLLoader();
 	loader.setLocation(getClass().getResource("/klient.fxml"));
 	Parent root = loader.load();
-	ControllerKlient controller = loader.getController();
-	controller.inicializuj(rezervace);
+	//ControllerKlient controller = loader.getController();
+	//controller.inicializuj(rezervace);
 	Stage novyKlient = new Stage();
 	novyKlient.setScene(new Scene(root));
 	novyKlient.show();
@@ -167,4 +185,77 @@ public void buttonZrusitClick() throws Exception{
 	vyberRezimu.setTitle("Výběr režimu");
 	}
 }
+
+public void setPodpis(String podpis) 
+{ 
+klientPopis.setText(podpis);
+}
+
+@FXML
+public void klientPopisClick() throws Exception{	
+}
+
+@FXML
+public void buttonPotvrditClick() throws Exception{	
+	if (jmeno.getText().equals("") || prijmeni.getText().equals("") || cisloOP.getText().equals("")) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatně zadané údaje");
+		alert.setHeaderText("Zadejte všechny údaje!");
+		alert.showAndWait();
+	}
+	else {
+	try {
+	Klient vkladany = new Klient(jmeno.getText(),prijmeni.getText(),Integer.parseInt(cisloOP.getText()));
+	if (rezervace.getKlienti().containsKey(vkladany.getCisloOP()) && (!rezervace.getKlienti().get(vkladany.getCisloOP()).getJmeno().equals(vkladany.getJmeno()) || !rezervace.getKlienti().get(vkladany.getCisloOP()).getPrijmeni().equals(vkladany.getPrijmeni()))) {	
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Tento OP je již v databázi");
+			alert.setHeaderText("Toto číslo občanského průkazu již zadal někdo kdo se jmenuje jinak než vy!");
+			alert.showAndWait();
+	}
+	else {
+	/*System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
+	//rezervace.vlozKlienta(vkladany);
+	String vysledek = jmeno.getText() + " " + prijmeni.getText() + " (OP: " + cisloOP.getText() + ")";
+	System.out.println(vysledek); */
+		rezervace.vlozKlienta(vkladany);
+		int id = 0; 
+		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+			 id = rezervaceId;
+			 System.out.println(id);
+		 }
+		String p = volnePokoje.getSelectionModel().getSelectedItem();
+		String pok = p.substring(0, 4);
+		Pokoj pokoj = rezervace.getPokoje().get(pok);
+		
+		
+		
+		String op = cisloOP.getText();
+		Integer k = Integer.parseInt(op);
+        Klient klient = rezervace.getKlienti().get(k);
+		LocalDate date = datumPrijezd.getValue();
+		LocalDate date2 = datumOdjezd.getValue();
+		int idR = id + 1;
+		 System.out.println(idR);
+		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
+		rezervace.vlozRezervaci(nr);
+	//Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+    //stage.close();
+    for(Entry<Integer, Klient> entry : rezervace.getKlienti().entrySet())
+    {  
+    	System.out.println(entry.getKey() + " : " +entry.getValue().getJmeno() + " " + entry.getValue().getPrijmeni());
+    }
+    for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {
+    	System.out.println(rezervace.getSeznamRezervaci().get(rezervaceId).toString());
+    }
+	}
+	}
+	catch (NumberFormatException e) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatný formát čísla OP");
+		alert.setHeaderText("Číslo OP musí být opravdu číslo!");
+		alert.showAndWait();
+	}
+	}
+}
+
 }

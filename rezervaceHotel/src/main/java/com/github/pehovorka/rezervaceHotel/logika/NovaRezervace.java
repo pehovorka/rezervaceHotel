@@ -34,15 +34,15 @@ public class NovaRezervace extends Observable {
 		this.pokoj = pokoj;
 		this.klient = klient;
 		this.id = id;
-		System.out.println(cenaZaRezervaci);
-		LocalDate d = datumZacatek;
-		while (!d.isAfter(datumKonec.minusDays(1))) {
+		//System.out.println(cenaZaRezervaci);
+		//LocalDate d = datumZacatek;
+		/*while (!d.isAfter(datumKonec.minusDays(1))) {
 			if(d.getMonthValue() <= sezonaDoMesic && d.getMonthValue() >= sezonaOdMesic)
 			{cenaZaRezervaci = cenaZaRezervaci + pokoj.getCenaSezona();}
 			else {cenaZaRezervaci = cenaZaRezervaci + pokoj.getCena();}
 			 d = d.plusDays(1);
 			}
-		System.out.println(cenaZaRezervaci);
+		System.out.println(cenaZaRezervaci);*/
 
 	}
 	/**

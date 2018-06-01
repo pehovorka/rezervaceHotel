@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.TreeMap;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
 import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
