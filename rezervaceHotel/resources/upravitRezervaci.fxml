@@ -76,7 +76,6 @@
                      <children>
                         <Label fx:id="LabelPuvodniCena" prefWidth="200.0" text="PuvodniCena" />
                         <Label fx:id="LabelPoUpraveCena" contentDisplay="CENTER" prefWidth="200.0" text="PoUprave" />
-                        <Label fx:id="LabelZmenaCena" prefWidth="200.0" text="Zmena" />
                      </children>
                      <VBox.margin>
                         <Insets top="15.0" />

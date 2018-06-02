@@ -48,8 +48,6 @@ public class ControllerUpravitRezervaci {
 	@FXML
 	private Label labelRezervaceInfo;
 	@FXML
-	private Label LabelZmenaCena;
-	@FXML
 	private Label LabelPuvodniCena;
 	@FXML
 	private Label LabelPoUpraveCena;
@@ -87,6 +85,14 @@ public class ControllerUpravitRezervaci {
 
 @FXML
 public void buttonPotvrditClick() throws Exception{
+	
+	if (LabelPoUpraveCena.getText().equals("PoUprave")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Rezervace nebyla oveřena.");
+			alert.setHeaderText("Nejdříve zkontrolujte dostupnost a cenu úpravy.");
+			alert.showAndWait();
+			return;
+	}
 
 	String strP = comboBoxPokoj.getValue();
 	String p = strP.substring(0,4);
@@ -105,6 +111,18 @@ public void buttonPotvrditClick() throws Exception{
 	LocalDate date2 = datumDo.getValue();
 	rezervace.setDatumZacatek(date);
 	rezervace.setDatumKonec(date2);
+	
+	int cena = 0;
+	int sezonaOdMesic = 6;
+	int sezonaDoMesic = 9;
+	while (!date.isAfter(date2.minusDays(1))) {
+		if(date.getMonthValue() <= sezonaDoMesic && date.getMonthValue() >= sezonaOdMesic)
+		{cena = cena + pokoj.getCenaSezona();}
+		else {cena = cena + pokoj.getCena();}
+		 date = date.plusDays(1);
+		}
+	rezervace.setCenaZaRezervaci(cena);
+	
 	Alert alert = new Alert(AlertType.INFORMATION);
 	alert.setTitle("Rezervace byla upravena.");
 	alert.setHeaderText("Byly provedené příslušné opravy.");
@@ -115,6 +133,21 @@ public void buttonPotvrditClick() throws Exception{
 
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
+	String strP = comboBoxPokoj.getValue();
+	String p = strP.substring(0,4);
+    Pokoj pokoj = hotel.getPokoje().get(p);
+    LocalDate date = datumOd.getValue();
+	LocalDate date2 = datumDo.getValue();
+	int cena = 0;
+	int sezonaOdMesic = 6;
+	int sezonaDoMesic = 9;
+	while (!date.isAfter(date2.minusDays(1))) {
+		if(date.getMonthValue() <= sezonaDoMesic && date.getMonthValue() >= sezonaOdMesic)
+		{cena = cena + pokoj.getCenaSezona();}
+		else {cena = cena + pokoj.getCena();}
+		 date = date.plusDays(1);
+		}
+	LabelPoUpraveCena.setText("Cena po úpravě: "+cena+"Kč");
 
 }
 

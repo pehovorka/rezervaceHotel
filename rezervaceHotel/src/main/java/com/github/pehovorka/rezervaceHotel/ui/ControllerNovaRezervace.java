@@ -221,8 +221,19 @@ public void buttonPotvrditClick() throws Exception{
 		LocalDate date = datumPrijezd.getValue();
 		LocalDate date2 = datumOdjezd.getValue();
 		int idR = id + 1;
-		 System.out.println(idR);
-		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
+		
+		int cena = 0;
+		int sezonaOdMesic = 6;
+		int sezonaDoMesic = 9;
+		while (!date.isAfter(date2.minusDays(1))) {
+			if(date.getMonthValue() <= sezonaDoMesic && date.getMonthValue() >= sezonaOdMesic)
+			{cena = cena + pokoj.getCenaSezona();}
+			else {cena = cena + pokoj.getCena();}
+			 date = date.plusDays(1);
+			}
+		
+		System.out.println(idR);
+		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient,cena);
 		rezervace.vlozRezervaci(nr);
 		
 		    Alert alert = new Alert(AlertType.INFORMATION);
@@ -258,7 +269,18 @@ public void buttonPotvrditClick() throws Exception{
 		LocalDate date2 = datumOdjezd.getValue();
 		int idR = id + 1;
 		 System.out.println(idR);
-		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
+		 
+		 int cena = 0;
+			int sezonaOdMesic = 6;
+			int sezonaDoMesic = 9;
+			while (!date.isAfter(date2.minusDays(1))) {
+				if(date.getMonthValue() <= sezonaDoMesic && date.getMonthValue() >= sezonaOdMesic)
+				{cena = cena + pokoj.getCenaSezona();}
+				else {cena = cena + pokoj.getCena();}
+				 date = date.plusDays(1);
+				}
+		 
+		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient,cena);
 		rezervace.vlozRezervaci(nr);
 		
 		Alert alert = new Alert(AlertType.INFORMATION);

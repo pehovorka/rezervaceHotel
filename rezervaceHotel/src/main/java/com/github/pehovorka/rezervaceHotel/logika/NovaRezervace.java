@@ -27,22 +27,14 @@ public class NovaRezervace extends Observable {
 	/**
 	 * Konstruktor vytváří jednotlivé seznamy (klienti, pokoje a vztahy mezi nimi).
 	 */
-	//public NovaRezervace(Integer id,Date datumZacatek, Date datumKonec, Pokoj pokoj, Klient klient) {
-	public NovaRezervace(Integer id, LocalDate datumZacatek, LocalDate datumKonec, Pokoj pokoj, Klient klient) {
+	public NovaRezervace(Integer id, LocalDate datumZacatek, LocalDate datumKonec, Pokoj pokoj, Klient klient, Integer cenaZaRezervaci) {
 		this.datumZacatek = datumZacatek;
 		this.datumKonec = datumKonec;
 		this.pokoj = pokoj;
 		this.klient = klient;
 		this.id = id;
-		//System.out.println(cenaZaRezervaci);
-		//LocalDate d = datumZacatek;
-		/*while (!d.isAfter(datumKonec.minusDays(1))) {
-			if(d.getMonthValue() <= sezonaDoMesic && d.getMonthValue() >= sezonaOdMesic)
-			{cenaZaRezervaci = cenaZaRezervaci + pokoj.getCenaSezona();}
-			else {cenaZaRezervaci = cenaZaRezervaci + pokoj.getCena();}
-			 d = d.plusDays(1);
-			}
-		System.out.println(cenaZaRezervaci);*/
+		this.cenaZaRezervaci = cenaZaRezervaci;
+
 
 	}
 	/**
@@ -118,6 +110,15 @@ public class NovaRezervace extends Observable {
 	    }
 	    
 	    /**
+		    * Setter pro nastaveni ceny rezervace
+		    * 
+		    * @return cenaZaRezervaci nastavuje cenu za rezervaci
+		    */
+		    public void setCenaZaRezervaci(int cenaZaRezervaci) {
+		    	this.cenaZaRezervaci = cenaZaRezervaci;
+		    }
+	    
+	    /**
 	    * Kontroluje, zda je možné přidat novou rezervaci.
 	    * Pokud je daný pokoj v požadovaném termínu již zarezervován, vrací false.
 	    * Používá se při vytváření nových rezervací a úpravě stávajících.
@@ -170,7 +171,7 @@ public class NovaRezervace extends Observable {
 	     * @return nazevSParametry
 	     */
 		public String getRezervace() {
-	        String rezervaceSParametry = getIdRezervace()+", Od: "+getDatumZacatek().getDayOfMonth()+"."+getDatumZacatek().getMonthValue()+". "+getDatumZacatek().getYear()+", Do: "+getDatumKonec().getDayOfMonth()+"."+getDatumKonec().getMonthValue()+". "+getDatumKonec().getYear()+", Pokoj: "+getPokoj().getNazev()+", Klient: "+getKlient();
+	        String rezervaceSParametry = getIdRezervace()+", Od: "+getDatumZacatek().getDayOfMonth()+"."+getDatumZacatek().getMonthValue()+". "+getDatumZacatek().getYear()+", Do: "+getDatumKonec().getDayOfMonth()+"."+getDatumKonec().getMonthValue()+". "+getDatumKonec().getYear()+", Pokoj: "+getPokoj().getNazev()+", Klient: "+getKlient()+", Cena: " + getCenaZaRezervaci();
 	    	return rezervaceSParametry;       
 	    }
 		

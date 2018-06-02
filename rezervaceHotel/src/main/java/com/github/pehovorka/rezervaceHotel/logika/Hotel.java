@@ -304,7 +304,7 @@ public class Hotel extends Observable {
 				System.out.println("rezervace.csv");
 				while (radek != null) {
 					String[] cast = radek.split(",");
-					if (cast.length != 9) {
+					if (cast.length != 10) {
 						throw new Exception();
 					} else {
 						
@@ -317,6 +317,7 @@ public class Hotel extends Observable {
 						int den2 = Integer.parseInt(cast[4]);
 						int mesic2 = Integer.parseInt(cast[5]);
 						int rok2 = Integer.parseInt(cast[6]);
+						int cena = Integer.parseInt(cast[9]);
 						
 						LocalDate dateZ = LocalDate.of(rok, mesic, den);
 						LocalDate dateK = LocalDate.of(rok2, mesic2, den2);
@@ -325,7 +326,7 @@ public class Hotel extends Observable {
 						Klient k = getKlient(klient);
 						
 						//NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
-						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
+						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k, cena);
 						seznamRezervaci.put(r.getIdRezervace(), r);
 						radek = ctecka.readLine();
 					}
@@ -419,7 +420,8 @@ public class Hotel extends Observable {
 				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getDayOfMonth() + "," + 
 				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getMonth().getValue() + "," +	
 				getSeznamRezervaci().get(rezervaceKlic).getDatumKonec().getYear() + "," 		
-				+ getSeznamRezervaci().get(rezervaceKlic).getPokoj().getNazev() + "," + getSeznamRezervaci().get(rezervaceKlic).getKlient().getCisloOP();
+				+ getSeznamRezervaci().get(rezervaceKlic).getPokoj().getNazev() + "," + getSeznamRezervaci().get(rezervaceKlic).getKlient().getCisloOP() 
+				+ "," + getSeznamRezervaci().get(rezervaceKlic).getCenaZaRezervaci();
 					zapisovac.write(radek);
 					zapisovac.newLine();
 					
