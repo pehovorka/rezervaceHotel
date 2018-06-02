@@ -184,15 +184,24 @@ public void klientPopisClick() throws Exception{
 
 @FXML
 public void buttonPotvrditClick() throws Exception{	
+	
 	if (jmeno.getText().equals("") || prijmeni.getText().equals("") || cisloOP.getText().equals("") || pozadovanaKategorie.getSelectionModel().isEmpty() || pocetLuzek.getSelectionModel().isEmpty() || datumPrijezd.getValue() == null || datumOdjezd.getValue() == null || volnePokoje.getSelectionModel().isEmpty()) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Špatně zadané údaje");
 		alert.setHeaderText("Zadejte všechny údaje!");
 		alert.showAndWait();
 	}
+	
 	else {
 	try {
 	Klient vkladany = new Klient(jmeno.getText(),prijmeni.getText(),Integer.parseInt(cisloOP.getText()));
+	if (rezervace.getKlienti().containsKey(vkladany.getCisloOP()) && (!rezervace.getKlienti().get(vkladany.getCisloOP()).getJmeno().equals(vkladany.getJmeno()) || !rezervace.getKlienti().get(vkladany.getCisloOP()).getPrijmeni().equals(vkladany.getPrijmeni()))) {	
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Tento OP je již v databázi");
+		alert.setHeaderText("Toto číslo občanského průkazu již zadal někdo kdo se jmenuje jinak než vy!");
+		alert.showAndWait();
+		return;
+    }
 	if (rezervace.getKlienti().containsKey(vkladany.getCisloOP())) {	
 			
 		int id = 0; 
