@@ -88,19 +88,6 @@ public class ControllerNovaRezervace {
 	}
 
 @FXML
-public void buttonPokracovatClick() throws Exception{
-	FXMLLoader loader = new FXMLLoader();
-	loader.setLocation(getClass().getResource("/klient.fxml"));
-	Parent root = loader.load();
-	//ControllerKlient controller = loader.getController();
-	//controller.inicializuj(rezervace);
-	Stage novyKlient = new Stage();
-	novyKlient.setScene(new Scene(root));
-	novyKlient.show();
-	novyKlient.setTitle("Zadání kontaktních údajů");		
-}
-
-@FXML
 public void buttonVyhledatPokojeClick() throws Exception{	
 	LocalDate date = datumPrijezd.getValue();
 	LocalDate date2 = datumOdjezd.getValue();
@@ -229,10 +216,14 @@ public void buttonPotvrditClick() throws Exception{
 		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
 		rezervace.vlozRezervaci(nr);
 		
-		    Alert alert = new Alert(AlertType.CONFIRMATION);
+		    Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Rezervace byla dokončena.");
 			alert.setHeaderText("Děkujeme že jste opět využil(a) naše služby! Tešíme se na Vás.");
 			alert.showAndWait();
+			rezervace.ulozSoubor("rezervace");
+			jmeno.clear();
+			prijmeni.clear();
+			cisloOP.clear();
 	}
 	else {
 	/*System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
@@ -261,10 +252,15 @@ public void buttonPotvrditClick() throws Exception{
 		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient);
 		rezervace.vlozRezervaci(nr);
 		
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Rezervace byla dokončena.");
 		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás");
 		alert.showAndWait();
+		rezervace.ulozSoubor("rezervace");
+		rezervace.ulozSoubor("klienti");
+		jmeno.clear();
+		prijmeni.clear();
+		cisloOP.clear();
 	//Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
     //stage.close();
     for(Entry<Integer, Klient> entry : rezervace.getKlienti().entrySet())
