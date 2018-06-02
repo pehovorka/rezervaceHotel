@@ -133,6 +133,28 @@ public void buttonPotvrditClick() throws Exception{
 
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
+
+	for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
+       NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);
+       String nazev = comboBoxPokoj.getSelectionModel().getSelectedItem();       
+       String nazevRez = nr.getPokoj().getNazevSParametry();
+   		LocalDate datez = nr.getDatumZacatek();
+   		LocalDate datek = nr.getDatumKonec();
+   	   LocalDate date = datumOd.getValue();
+  	   LocalDate date2 = datumDo.getValue();
+   		if(nazev.equals(nazevRez)) {
+		
+		if ((datez.equals(date) && datek.equals(date2)) || (date.isBefore(datek) && date.isAfter(datez)) || 
+				(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek)) ) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Rezervace má špatné nastavení.");
+			alert.setHeaderText("V daném časovem rozmezí pokoj není dostupen.");
+			alert.showAndWait();
+			return;
+		}
+		}
+	}
 	String strP = comboBoxPokoj.getValue();
 	String p = strP.substring(0,4);
     Pokoj pokoj = hotel.getPokoje().get(p);
@@ -148,7 +170,12 @@ public void buttonDostupnostCenaClick() throws Exception{
 		 date = date.plusDays(1);
 		}
 	LabelPoUpraveCena.setText("Cena po úpravě: "+cena+"Kč");
-
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Rezervace byla ověřena.");
+	alert.setHeaderText("Rezervace byla ověřena.");
+	alert.showAndWait();
+	Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+    stage.close();
 }
 
 @FXML

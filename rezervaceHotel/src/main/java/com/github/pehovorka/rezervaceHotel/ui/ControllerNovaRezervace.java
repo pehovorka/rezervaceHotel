@@ -131,8 +131,8 @@ public void buttonVyhledatPokojeClick() throws Exception{
 			
        		if(nazev.equals(nazevRez)) {
 			
-			if (datez.equals(date) || datek.equals(date) || datez.equals(date2) || datek.equals(date2) || (date.isBefore(datek) && date.isAfter(datez)) || 
-					(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek))) {
+			if ((datez.equals(date) && datek.equals(date2)) || (date.isBefore(datek) && date.isAfter(datez)) || 
+					(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek)) ) {
 				seznamVolnychPokoju.remove(rezervace.getPokoje().get(pokojKlic).toString());
 				break;
 			}
@@ -238,12 +238,11 @@ public void buttonPotvrditClick() throws Exception{
 		
 		    Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Rezervace byla dokončena.");
-			alert.setHeaderText("Děkujeme že jste opět využil(a) naše služby! Tešíme se na Vás.");
+			alert.setHeaderText("Děkujeme že jste opět využil(a) naše služby! Tešíme se na Vás." + " Cena rezervaci je " + cena + "Kč.");
 			alert.showAndWait();
 			rezervace.ulozSoubor("rezervace");
-			jmeno.clear();
-			prijmeni.clear();
-			cisloOP.clear();
+			Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+		    stage.close();
 	}
 	else {
 	/*System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
@@ -285,15 +284,13 @@ public void buttonPotvrditClick() throws Exception{
 		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Rezervace byla dokončena.");
-		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás");
+		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás." + " Cena rezervaci je " + cena + " Kč.");
 		alert.showAndWait();
 		rezervace.ulozSoubor("rezervace");
 		rezervace.ulozSoubor("klienti");
-		jmeno.clear();
-		prijmeni.clear();
-		cisloOP.clear();
-	//Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
-    //stage.close();
+		Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+	    stage.close();
+	    
     for(Entry<Integer, Klient> entry : rezervace.getKlienti().entrySet())
     {  
     	System.out.println(entry.getKey() + " : " +entry.getValue().getJmeno() + " " + entry.getValue().getPrijmeni());
