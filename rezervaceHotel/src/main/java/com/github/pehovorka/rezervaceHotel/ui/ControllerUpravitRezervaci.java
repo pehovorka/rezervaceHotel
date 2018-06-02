@@ -11,11 +11,12 @@ import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
 import com.github.pehovorka.rezervaceHotel.logika.Pokoj;
 
 import javafx.fxml.FXML;
-
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +35,8 @@ public class ControllerUpravitRezervaci {
 	private Button buttonZrusit;
 	@FXML
 	private Button buttonDostupnostCena;
+	@FXML
+	private Button smazatRezervaci;
 	@FXML
 	private DatePicker datumOd;
 	@FXML
@@ -102,6 +105,12 @@ public void buttonPotvrditClick() throws Exception{
 	LocalDate date2 = datumDo.getValue();
 	rezervace.setDatumZacatek(date);
 	rezervace.setDatumKonec(date2);
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Rezervace byla upravena.");
+	alert.setHeaderText("Byly provedené příslušné opravy.");
+	alert.showAndWait();
+	Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
+    stage.close();
 }
 
 @FXML
@@ -126,6 +135,16 @@ public void comboBoxPokojClick() throws Exception{
 @FXML
 public void comboBoxKlientClick() throws Exception{
 
+}
+@FXML
+public void smazatRezervaciClick() throws Exception{
+Alert alert = new Alert(AlertType.INFORMATION);
+alert.setTitle("Rezervace byla smazana.");
+alert.setHeaderText("Rezervace byla smazana ze souboru.");
+alert.showAndWait();
+hotel.odeberRezervaci(rezervace);
+Stage stage = (Stage) smazatRezervaci.getScene().getWindow();
+stage.close();
 }
 
 @FXML
