@@ -133,7 +133,13 @@ public void buttonPotvrditClick() throws Exception{
 
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
-	
+	if (datumOd.getValue() == null || datumDo.getValue() == null || comboBoxPokoj.getSelectionModel().getSelectedItem().isEmpty() || comboBoxKlient.getSelectionModel().getSelectedItem().isEmpty()) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Rezervace nebyla oveřena.");
+		alert.setHeaderText("Zadejte všechny údaje.");
+		alert.showAndWait();
+		return;
+	} 
 	LocalDate date = datumOd.getValue();
 	   LocalDate date2 = datumDo.getValue();
 	if (date.isAfter(date2)) {
@@ -180,8 +186,6 @@ public void buttonDostupnostCenaClick() throws Exception{
 	alert.setTitle("Rezervace byla ověřena.");
 	alert.setHeaderText("Rezervace byla ověřena.");
 	alert.showAndWait();
-	Stage stage = (Stage) buttonPotvrdit.getScene().getWindow();
-    stage.close();
 }
 
 @FXML
