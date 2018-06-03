@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.TreeMap;
 
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
 import com.github.pehovorka.rezervaceHotel.logika.NovaRezervace;
@@ -194,11 +193,6 @@ public class Hotel extends Observable {
 	public Integer[] getPoctyLuzek() {
 		return poctyLuzek;
 	}
-	
-	public NovaRezervace getNazevRezervace(Integer nazev) {
-		return seznamRezervaci.get(nazev);
-	}
-	
 
 	/**
 	 * Metoda pro zkopírování souborů.
@@ -265,6 +259,14 @@ public class Hotel extends Observable {
 		}
 	}
 
+	/**
+	 * Metoda pro načitání souborů.
+	 * 
+	 * @param soubor
+	 *            Adresa zdrojového souboru
+	 * @param typ
+	 *            typ souboru
+	 */
 	public void nactiSoubor(String soubor, String typ) {
 		File slozka = new File("hotelData");
 		if (!slozka.exists()) {
@@ -325,7 +327,6 @@ public class Hotel extends Observable {
 						Pokoj p = getPokoj(pokoj);
 						Klient k = getKlient(klient);
 						
-						//NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k);
 						NovaRezervace r = new NovaRezervace(Integer.parseInt(cast[0]), dateZ, dateK, p, k, cena);
 						seznamRezervaci.put(r.getIdRezervace(), r);
 						radek = ctecka.readLine();
@@ -377,6 +378,12 @@ public class Hotel extends Observable {
 		}
 	}
 
+	/**
+	 * Metoda pro ukládání souborů.
+	 * 
+	 * @param typ
+	 *            typ souboru
+	 */
 	public void ulozSoubor(String typ) throws FileNotFoundException {
 		if (typ.equals("klienti")) {
 			FileOutputStream klientiOutStream = new FileOutputStream(klientiSoubor);

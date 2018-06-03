@@ -46,6 +46,11 @@ public class ControllerNovyKlient extends GridPane{
 		this.rezervace = rezervace;	
 	}
 	
+	/**
+	 * Metoda pro potvrzení vytváření nového klienta.
+	 * Vratí alert určující důsledek operace.
+	 * 
+	 */
 	@FXML
 	public void buttonPotvrditClick() throws Exception{	
 		if (jmeno.getText().equals("") || prijmeni.getText().equals("") || cisloOP.getText().equals("")) {
@@ -82,6 +87,11 @@ public class ControllerNovyKlient extends GridPane{
 		}
 		}
 	}
+	/**
+	 * Metoda pro zrušení okna.
+	 * 
+	 * 
+	 */
 	@FXML
 	public void buttonZrusitClick() throws Exception{	
 		Stage stage = (Stage) buttonZrusit.getScene().getWindow();

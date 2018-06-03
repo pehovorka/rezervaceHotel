@@ -87,6 +87,11 @@ public class ControllerNovaRezervace {
 		
 	}
 
+	/**
+	 * Metoda pro vyhledávání volnych pokojů
+	 * Vratí alert určující důsledek operace.
+	 * 
+	 */
 @FXML
 public void buttonVyhledatPokojeClick() throws Exception{	
 	LocalDate date = datumPrijezd.getValue();
@@ -156,6 +161,10 @@ public void datumPrijezdClick() throws Exception{
 public void datumOdjezdClick() throws Exception{	
 }
 
+/**
+ * Metoda zruší okno.
+ * 
+ */
 @FXML
 public void buttonZrusitClick() throws Exception{	
 	Stage stage = (Stage) buttonZrusit.getScene().getWindow();
@@ -173,15 +182,11 @@ public void buttonZrusitClick() throws Exception{
 	}
 }
 
-public void setPodpis(String podpis) 
-{ 
-klientPopis.setText(podpis);
-}
-
-@FXML
-public void klientPopisClick() throws Exception{	
-}
-
+/**
+ * Metoda pro potvrzení rezervace.
+ * Vratí alert určující důsledek operace.
+ * 
+ */
 @FXML
 public void buttonPotvrditClick() throws Exception{	
 	
@@ -245,10 +250,6 @@ public void buttonPotvrditClick() throws Exception{
 		    stage.close();
 	}
 	else {
-	/*System.out.println("Vkládám: Jméno: "+vkladany.getJmeno()+" Příjmení: "+vkladany.getPrijmeni()+" Číslo OP: "+vkladany.getCisloOP());
-	//rezervace.vlozKlienta(vkladany);
-	String vysledek = jmeno.getText() + " " + prijmeni.getText() + " (OP: " + cisloOP.getText() + ")";
-	System.out.println(vysledek); */
 		rezervace.vlozKlienta(vkladany);
 		int id = 0; 
 		for (Integer rezervaceId : rezervace.getSeznamRezervaci().keySet()) {

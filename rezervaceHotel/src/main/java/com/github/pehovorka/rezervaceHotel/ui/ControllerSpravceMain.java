@@ -90,6 +90,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    hotel.addObserver(this);
 	}
 	
+	/**
+	 * Metoda vyvolává okno nové rezervace.
+	 * 
+	 */
 	@FXML
 	public void menuItemNovaRezervaceClick() throws Exception{
 		FXMLLoader loader = new FXMLLoader();
@@ -102,7 +106,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		novaRezervace.show();
 		novaRezervace.setTitle("Nová rezervace");	
 	}
-	
+	/**
+	 * Metoda vyvolává okno nového pokoje.
+	 * 
+	 */
 	@FXML
 	public void menuItemNovyPokojClick() throws Exception{
 		FXMLLoader loader = new FXMLLoader();
@@ -115,7 +122,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		novyPokoj.show();
 		novyPokoj.setTitle("Nový pokoj");
 	}
-	
+	/**
+	 * Metoda vyvolává okno nového klienta.
+	 * 
+	 */
 	@FXML
 	public void menuItemNovyKlientClick() throws Exception{
 		FXMLLoader loader = new FXMLLoader();
@@ -128,6 +138,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		novyPokoj.show();
 		novyPokoj.setTitle("Nový Klient");
 	}
+	
+	/**
+	 * Metoda uloží všechny záznamy do souborů.
+	 * 
+	 */
 	@FXML
 	public void menuItemUlozitClick() throws Exception{
 		hotel.ulozSoubor("klienti");
@@ -139,7 +154,11 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		alert.showAndWait();
 
 	}
-	
+	/**
+	 * Metoda filtruje rezervace podle input parametrů.
+	 * Když parametry nejsou zadané, vratí celý seznam.
+	 * 
+	 */
 	@FXML
 	public void buttonFiltrovatClick() throws Exception{	
 	    seznamRezervaci.getItems().clear();
@@ -160,17 +179,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
 			LocalDate date = datum.getValue();
-/*			Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			LocalDate date = LocalDate.from(instant);*/
 			
 			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
 				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
-				
-/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-				String a2 = format.format(nr.getDatumZacatek());
-				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = date.format(format2);*/
-				
+
 				
 				LocalDate datez = nr.getDatumZacatek();
 				LocalDate datek = nr.getDatumKonec();
@@ -212,17 +224,9 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		if (!(datum.getValue() == null) && !isMyComboBoxEmpty && isMyComboBoxEmpty2) {
 			LocalDate date = datum.getValue();
-			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			LocalDate date = LocalDate.from(instant);*/
 			
 			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
 				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
-				
-/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-				String a2 = format.format(nr.getDatumZacatek());
-				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = date.format(format2);*/
-				
 				
 				LocalDate datez = nr.getDatumZacatek();
 				LocalDate datek = nr.getDatumKonec();
@@ -240,17 +244,9 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		if (!(datum.getValue() == null) && isMyComboBoxEmpty && !isMyComboBoxEmpty2) {
 			LocalDate date = datum.getValue();
-			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			LocalDate date = LocalDate.from(instant);*/
 			
 			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
 				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
-				
-/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-				String a2 = format.format(nr.getDatumZacatek());
-				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = date.format(format2);*/
-				
 				
 				LocalDate datez = nr.getDatumZacatek();
 				LocalDate datek = nr.getDatumKonec();
@@ -271,18 +267,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		
 		if (!(datum.getValue() == null) && isMyComboBoxEmpty && isMyComboBoxEmpty2) {
 			LocalDate date = datum.getValue();
-			/*Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-			LocalDate date = LocalDate.from(instant);*/
-			
+
 			for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
 				NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);	
-				
-/*				SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-				String a2 = format.format(nr.getDatumZacatek());
-				DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				String a1 = date.format(format2);*/
-				
-				
+
 				LocalDate datez = nr.getDatumZacatek();
 				LocalDate datek = nr.getDatumKonec();
 				
@@ -326,6 +314,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		};
 	}
 	
+	/**
+	 * Metoda vybere všechny rezervace.
+	 * 
+	 */
 	@FXML
 	public void selectAllClick() throws Exception{
 	    seznamRezervaci.getItems().clear();
@@ -337,7 +329,10 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 	    seznamRezervaci.getItems().addAll(seznamVsechRezervaci);
 	}
 	
-	
+	/**
+	 * Metoda spustní okno úpravy vybrané rezervace.
+	 * 
+	 */
 	@FXML
 	public void seznamRezervaciClick() throws Exception{
 	    if (seznamRezervaci.getSelectionModel().isEmpty()) {}

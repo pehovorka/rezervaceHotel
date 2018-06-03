@@ -19,8 +19,6 @@ public class NovaRezervace extends Observable {
 	private Klient klient;
 	private int id;
 	private int cenaZaRezervaci;
-	private int sezonaOdMesic = 6;
-	private int sezonaDoMesic = 9;
 	
 	//private Hotel hotel;
 
@@ -117,26 +115,6 @@ public class NovaRezervace extends Observable {
 		    public void setCenaZaRezervaci(int cenaZaRezervaci) {
 		    	this.cenaZaRezervaci = cenaZaRezervaci;
 		    }
-	    
-	    /**
-	    * Kontroluje, zda je možné přidat novou rezervaci.
-	    * Pokud je daný pokoj v požadovaném termínu již zarezervován, vrací false.
-	    * Používá se při vytváření nových rezervací a úpravě stávajících.
-	    * 
-	    * @param LocalDate pozadavekOd - požadovaný začátek termínu nové rezervace
-	    * @param LocalDate pozadavekDo - požadovaný konec termínu nové rezervace
-	    * @param Pokoj pozadovanyPokoj - požadovaný pokoj pro novou rezervaci
-	    * 
-	    * @return volny vrací, zda je požadvaný pokoj v požadovaném termínu volný
-	    */
-	    public Boolean jeTerminVolny(LocalDate pozadavekOd, LocalDate pozadavekDo, Pokoj pozadovanyPokoj) {
-	    	Boolean volny = false;
-	    	//if () {}
-	    	//else {
-	    	//volny = true;
-	    	//}
-	        return volny;
-	    }
 	    
 	    /**
 	    * Getter pro nastavení jména

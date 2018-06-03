@@ -55,13 +55,22 @@ public class ControllerNovyPokoj extends GridPane {
 		comboBoxPocetLuzek.getItems().addAll(rezervace.getPoctyLuzek());
 
 	}
-
+	/**
+	 * Metoda pro zrušení okna.
+	 * 
+	 * 
+	 */
 	@FXML
 	public void buttonZrusitClick() throws Exception {
 		Stage stage = (Stage) buttonZrusit.getScene().getWindow();
 		stage.close();
 	}
 
+	/**
+	 * Metoda pro potvrzení vytvoření nového pokoje.
+	 * Vratí alert určující důsledek operace.
+	 * 
+	 */
 	@FXML
 	public void buttonPotvrditClick() throws Exception {
 		if (textFieldCena.getText().equals("") || textFieldCenaSezona.getText().equals("")

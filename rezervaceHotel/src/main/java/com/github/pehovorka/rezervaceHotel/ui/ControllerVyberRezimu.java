@@ -43,6 +43,9 @@ public class ControllerVyberRezimu extends GridPane {
 		this.rezervace = rezervace;
 	}
 	
+	/**
+	 * Metoda vratí okno zákazník.
+	 */
 	@FXML
 	public void buttonZakaznikClick() throws Exception{
 	    Stage stage = (Stage) buttonZakaznik.getScene().getWindow();
@@ -78,6 +81,9 @@ public class ControllerVyberRezimu extends GridPane {
 	   }); 
 	}
 	
+	/**
+	 * Metoda vratí okno správce.
+	 */
 	@FXML
 	public void buttonSpravceClick() throws Exception {
 	    Stage stage = (Stage) buttonSpravce.getScene().getWindow();

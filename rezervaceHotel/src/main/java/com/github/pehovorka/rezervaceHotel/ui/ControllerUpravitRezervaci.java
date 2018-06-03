@@ -61,9 +61,11 @@ public class ControllerUpravitRezervaci {
 	/**
 	 * Metoda provede inicializaci grafických prvků
 	 * 
-	 * @param hotel7
+	 * @param hotel
 	 *            aktuální hotel
 	 * 
+	 * @param rezervace
+	 *            aktuální rezervace
 	 */
 	public void inicializuj(Hotel hotel, NovaRezervace rezervace) {
 		this.hotel = hotel;
@@ -83,6 +85,10 @@ public class ControllerUpravitRezervaci {
 		System.out.println(rezervace.getDatumZacatek());
 	}
 
+	/**
+	 * Metoda potvrzuje opravu rezervace.
+	 * Vrací příslušný alert.
+	 */
 @FXML
 public void buttonPotvrditClick() throws Exception{
 	
@@ -131,6 +137,10 @@ public void buttonPotvrditClick() throws Exception{
     stage.close();
 }
 
+/**
+ * Metoda ověřuje jestli je ta rezervace volná.
+ * 
+ */
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
 	if (datumOd.getValue() == null || datumDo.getValue() == null || comboBoxPokoj.getSelectionModel().getSelectedItem().isEmpty() || comboBoxKlient.getSelectionModel().getSelectedItem().isEmpty()) {
@@ -187,6 +197,33 @@ public void buttonDostupnostCenaClick() throws Exception{
 	alert.setHeaderText("Rezervace byla ověřena.");
 	alert.showAndWait();
 }
+/**
+ * Metoda smaž tuhle rezervaci.
+ * 
+ */
+@FXML
+public void smazatRezervaciClick() throws Exception{
+Alert alert = new Alert(AlertType.INFORMATION);
+alert.setTitle("Rezervace byla smazana.");
+alert.setHeaderText("Rezervace byla smazana ze souboru.");
+alert.showAndWait();
+hotel.odeberRezervaci(rezervace);
+Stage stage = (Stage) smazatRezervaci.getScene().getWindow();
+stage.close();
+}
+
+/**
+ * Metoda zruší okno.
+ * 
+ */
+@FXML
+public void buttonZrusitClick() throws Exception{	
+	Stage stage = (Stage) buttonZrusit.getScene().getWindow();
+    stage.close();
+
+}
+
+
 
 @FXML
 public void datumOdClick() throws Exception{	
@@ -206,20 +243,6 @@ public void comboBoxPokojClick() throws Exception{
 public void comboBoxKlientClick() throws Exception{
 
 }
-@FXML
-public void smazatRezervaciClick() throws Exception{
-Alert alert = new Alert(AlertType.INFORMATION);
-alert.setTitle("Rezervace byla smazana.");
-alert.setHeaderText("Rezervace byla smazana ze souboru.");
-alert.showAndWait();
-hotel.odeberRezervaci(rezervace);
-Stage stage = (Stage) smazatRezervaci.getScene().getWindow();
-stage.close();
 }
 
-@FXML
-public void buttonZrusitClick() throws Exception{	
-	Stage stage = (Stage) buttonZrusit.getScene().getWindow();
-    stage.close();
-	}
-}
+
