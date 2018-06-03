@@ -149,7 +149,7 @@ public void buttonDostupnostCenaClick() throws Exception{
 		alert.showAndWait();
 		return;
 	} 
-	LocalDate date = datumOd.getValue();
+	   LocalDate date = datumOd.getValue();
 	   LocalDate date2 = datumDo.getValue();
 		LocalDate dateNow = LocalDate.now();
 		if (date.isBefore(dateNow)) {
@@ -159,7 +159,7 @@ public void buttonDostupnostCenaClick() throws Exception{
 			alert.showAndWait();
 			return;
 		}
-	if (date.isAfter(date2)) {
+	if (date.isAfter(date2) || date.equals(date2)) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Špatně zadané údaje");
 		alert.setHeaderText("Datum příjezdu musí být dříve než datum odjezdu!");
