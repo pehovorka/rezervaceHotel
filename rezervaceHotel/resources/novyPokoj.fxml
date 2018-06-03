@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.pehovorka.rezervaceHotel.ui.ControllerNovyPokoj">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -23,21 +23,23 @@
       <VBox minWidth="350.0" prefHeight="350.0" prefWidth="10.0" GridPane.rowIndex="1">
          <children>
             <Label text="Počet lůžek" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <ComboBox fx:id="comboBoxPocetLuzek" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
             <Label text="Třída" />
-            <ComboBox maxWidth="1.7976931348623157E308" prefWidth="150.0" />
-            <Label text="Cena za noc" />
-            <TextField />
-            <Label text="Číslo pokoje" />
-            <TextField />
+            <ComboBox fx:id="comboBoxTrida" maxWidth="1.7976931348623157E308" prefWidth="150.0" />
+            <Label text="Cena za noc mimo sezónu" />
+            <TextField fx:id="textFieldCena" />
+            <Label layoutX="10.0" layoutY="94.0" text="Cena za noc během sezóny" />
+            <TextField fx:id="textFieldCenaSezona" layoutX="10.0" layoutY="111.0" />
+            <Label text="Název pokoje" />
+            <TextField fx:id="textFieldNazev" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Zrušit">
+                  <Button fx:id="buttonZrusit" mnemonicParsing="false" onAction="#buttonZrusitClick" text="Zrušit">
                      <HBox.margin>
                         <Insets left="400.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Potvrdit">
+                  <Button fx:id="buttonPotvrdit" mnemonicParsing="false" onAction="#buttonPotvrditClick" text="Potvrdit">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
