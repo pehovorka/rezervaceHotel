@@ -106,7 +106,7 @@ public void buttonVyhledatPokojeClick() throws Exception{
 		alert.showAndWait();
 		return;
 	}
-	if (date.isAfter(date2)) {
+	if (date.isAfter(date2) || date.equals(date2)) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Špatně zadané údaje");
 		alert.setHeaderText("Datum příjezdu musí být dříve než datum odjezdu!");
@@ -283,6 +283,7 @@ public void buttonPotvrditClick() throws Exception{
 				else {cena = cena + pokoj.getCena();}
 				 date = date.plusDays(1);
 				}
+			
 		LocalDate date1 = datumPrijezd.getValue();
 		LocalDate date12 = datumOdjezd.getValue();
 		NovaRezervace nr = new NovaRezervace(idR,date1,date12,pokoj,klient,cena);
@@ -290,7 +291,7 @@ public void buttonPotvrditClick() throws Exception{
 		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Rezervace byla dokončena.");
-		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás." + " Cena rezervaci je " + cena + " Kč.");
+		alert.setHeaderText("Děkujeme, rezervace byla vytvořena. Těšíme se na Vás." + " Cena za rezervaci je " + cena + " Kč.");
 		alert.showAndWait();
 		rezervace.ulozSoubor("rezervace");
 		rezervace.ulozSoubor("klienti");
