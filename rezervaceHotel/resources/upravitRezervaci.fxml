@@ -75,7 +75,7 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label fx:id="LabelPuvodniCena" prefWidth="200.0" text="PuvodniCena" />
-                        <Label fx:id="LabelPoUpraveCena" contentDisplay="CENTER" prefWidth="200.0" text="PoUprave" />
+                        <Label fx:id="LabelPoUpraveCena" contentDisplay="CENTER" prefWidth="200.0" text="Cena po úpravě:" />
                      </children>
                      <VBox.margin>
                         <Insets top="15.0" />

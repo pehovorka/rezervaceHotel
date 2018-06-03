@@ -148,8 +148,8 @@ public class ControllerSpravceMain extends GridPane implements Observer {
 		hotel.ulozSoubor("pokoje");
 		hotel.ulozSoubor("rezervace");
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Všechny záznamy byli uloženy.");
-		alert.setHeaderText("Všechny záznamy byli uloženy.");
+		alert.setTitle("Všechny záznamy byly uloženy.");
+		alert.setHeaderText("Všechny záznamy byly uloženy.");
 		alert.showAndWait();
 
 	}

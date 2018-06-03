@@ -91,10 +91,18 @@ public class ControllerNovaRezervace {
 public void buttonVyhledatPokojeClick() throws Exception{	
 	LocalDate date = datumPrijezd.getValue();
 	LocalDate date2 = datumOdjezd.getValue();
+	LocalDate dateNow = LocalDate.now();
 	if (pozadovanaKategorie.getSelectionModel().isEmpty() || pocetLuzek.getSelectionModel().isEmpty() || datumPrijezd.getValue() == null || datumOdjezd.getValue() == null ) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Špatně zadané údaje");
 		alert.setHeaderText("Zadejte všechny údaje!");
+		alert.showAndWait();
+		return;
+	}
+	if (date.isBefore(dateNow)) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatně zadané údaje");
+		alert.setHeaderText("Datum příjezdu musí být později než dneska!");
 		alert.showAndWait();
 		return;
 	}
@@ -130,9 +138,9 @@ public void buttonVyhledatPokojeClick() throws Exception{
        		LocalDate datek = nr.getDatumKonec();
 			
        		if(nazev.equals(nazevRez)) {
-			
-			if ((datez.equals(date) && datek.equals(date2)) || (date.isBefore(datek) && date.isAfter(datez)) || 
-					(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek)) ) {
+       			if ((datez.equals(date) && datek.equals(date2)) || (date.isBefore(datek) && date.isAfter(datez)) || 
+       					(date2.isBefore(datek) && date2.isAfter(datez)) || (date.isBefore(datez) && date2.isAfter(datek)) || (date2.equals(datek) && date.isBefore(datez)) || (date.equals(datez) && date2.isAfter(datek))) {
+
 				seznamVolnychPokoju.remove(rezervace.getPokoje().get(pokojKlic).toString());
 				break;
 			}
