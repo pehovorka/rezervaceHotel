@@ -133,15 +133,23 @@ public void buttonPotvrditClick() throws Exception{
 
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
-
+	
+	LocalDate date = datumOd.getValue();
+	   LocalDate date2 = datumDo.getValue();
+	if (date.isAfter(date2)) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Špatně zadané údaje");
+		alert.setHeaderText("Datum příjezdu musí být dříve než datum odjezdu!");
+		alert.showAndWait();
+		return;
+	}
 	for (Integer rezervaceId : hotel.getSeznamRezervaci().keySet()) {
        NovaRezervace nr = hotel.getSeznamRezervaci().get(rezervaceId);
        String nazev = comboBoxPokoj.getSelectionModel().getSelectedItem();       
        String nazevRez = nr.getPokoj().getNazevSParametry();
    		LocalDate datez = nr.getDatumZacatek();
    		LocalDate datek = nr.getDatumKonec();
-   	   LocalDate date = datumOd.getValue();
-  	   LocalDate date2 = datumDo.getValue();
+   	   
    		if(nazev.equals(nazevRez)) {
 		
 		if ((datez.equals(date) && datek.equals(date2)) || (date.isBefore(datek) && date.isAfter(datez)) || 
@@ -158,8 +166,6 @@ public void buttonDostupnostCenaClick() throws Exception{
 	String strP = comboBoxPokoj.getValue();
 	String p = strP.substring(0,4);
     Pokoj pokoj = hotel.getPokoje().get(p);
-    LocalDate date = datumOd.getValue();
-	LocalDate date2 = datumDo.getValue();
 	int cena = 0;
 	int sezonaOdMesic = 6;
 	int sezonaDoMesic = 9;
