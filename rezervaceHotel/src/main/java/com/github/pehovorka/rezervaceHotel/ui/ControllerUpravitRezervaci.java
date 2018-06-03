@@ -142,7 +142,7 @@ public void buttonPotvrditClick() throws Exception{
  */
 @FXML
 public void buttonDostupnostCenaClick() throws Exception{
-	if (datumOd.getValue() == null || datumDo.getValue() == null || comboBoxPokoj.getSelectionModel().getSelectedItem().isEmpty() || comboBoxKlient.getSelectionModel().getSelectedItem().isEmpty()) {
+	if (datumOd.getValue() == null || datumDo.getValue() == null || comboBoxPokoj.getSelectionModel().isEmpty() || comboBoxKlient.getSelectionModel().isEmpty()) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Rezervace nebyla oveřena.");
 		alert.setHeaderText("Zadejte všechny údaje.");
