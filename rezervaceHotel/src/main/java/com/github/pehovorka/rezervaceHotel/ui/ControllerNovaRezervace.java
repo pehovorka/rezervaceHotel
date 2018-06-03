@@ -239,9 +239,10 @@ public void buttonPotvrditClick() throws Exception{
 			else {cena = cena + pokoj.getCena();}
 			 date = date.plusDays(1);
 			}
-		
+		LocalDate date1 = datumPrijezd.getValue();
+		LocalDate date12 = datumOdjezd.getValue();
 		System.out.println(idR);
-		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient,cena);
+		NovaRezervace nr = new NovaRezervace(idR,date1,date12,pokoj,klient,cena);
 		rezervace.vlozRezervaci(nr);
 		
 		    Alert alert = new Alert(AlertType.INFORMATION);
@@ -282,8 +283,9 @@ public void buttonPotvrditClick() throws Exception{
 				else {cena = cena + pokoj.getCena();}
 				 date = date.plusDays(1);
 				}
-		 
-		NovaRezervace nr = new NovaRezervace(idR,date,date2,pokoj,klient,cena);
+		LocalDate date1 = datumPrijezd.getValue();
+		LocalDate date12 = datumOdjezd.getValue();
+		NovaRezervace nr = new NovaRezervace(idR,date1,date12,pokoj,klient,cena);
 		rezervace.vlozRezervaci(nr);
 		
 		Alert alert = new Alert(AlertType.INFORMATION);

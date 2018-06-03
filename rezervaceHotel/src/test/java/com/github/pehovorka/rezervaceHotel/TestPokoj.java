@@ -37,7 +37,7 @@ public class TestPokoj {
 	     *     
 	     */
 	    @Test
-		public void existujeRezervace() {
+		public void existujePokoj() {
 	    	Pokoj pokoj = new Pokoj("X010","premium",10,1000,1200);
 	    	hotel.vlozPokoj(pokoj);;
 	    	System.out.println(hotel.getPokoje());
