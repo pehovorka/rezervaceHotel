@@ -22,7 +22,6 @@ import javafx.stage.WindowEvent;;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-@SuppressWarnings("restriction")
 public class ControllerVyberRezimu extends GridPane {
 
 	private Hotel rezervace;

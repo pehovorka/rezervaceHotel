@@ -27,7 +27,6 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-@SuppressWarnings("restriction")
 public class ControllerUpravitRezervaci {
 	@FXML
 	private Button buttonPotvrdit;

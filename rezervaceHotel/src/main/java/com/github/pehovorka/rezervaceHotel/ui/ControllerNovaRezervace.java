@@ -1,14 +1,10 @@
 package com.github.pehovorka.rezervaceHotel.ui;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
 import java.util.Map.Entry;
-import java.util.NavigableMap;
 
 import com.github.pehovorka.rezervaceHotel.logika.Hotel;
 import com.github.pehovorka.rezervaceHotel.logika.Klient;
@@ -36,7 +32,6 @@ import javafx.stage.Stage;
  *@author     Petr Hovorka, Aleksandr Kadesnikov
  *@version    Alpha 1
  */
-@SuppressWarnings("restriction")
 public class ControllerNovaRezervace {
 	@FXML
 	private Button buttonPokracovat;
